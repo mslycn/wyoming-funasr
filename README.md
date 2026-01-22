@@ -29,6 +29,11 @@ docker run -d \
 
 ~~~
 
+Home Assistant
+
+HA → Settings → Voice → Speech-to-Text
+
+
 
 ## Debug
 
