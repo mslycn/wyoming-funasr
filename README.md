@@ -34,6 +34,11 @@ docker run --rm \
   ghcr.io/mslycn/wyoming-whisper:latest
 ~~~
 
+~~~
+docker inspect --format '{{.Architecture}}' ghcr.io/mslycn/wyoming-whisper:latest
+
+~~~
+
 
 Base Images:
 
