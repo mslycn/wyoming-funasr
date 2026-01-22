@@ -1,5 +1,7 @@
 # Raspberry Pi 5 + ARM64 + Wyoming + FunASR - Docker Image
 
+Integrating FunASR with Home Assistant
+
 ## Project structre
 ~~~
 funasr-wyoming/
