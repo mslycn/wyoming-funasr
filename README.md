@@ -1,4 +1,16 @@
-
+## Project structre
+~~~
+funasr-wyoming/
+├── Dockerfile
+├── requirements.txt
+├── server.py
+├── entrypoint.sh
+├── models/
+│   └── README.md
+└── .github/
+    └── workflows/
+        └── docker-arm64.yml
+~~~
 
 Base Images:
 
