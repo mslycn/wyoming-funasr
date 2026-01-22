@@ -66,3 +66,9 @@ https://github.com/home-assistant/docker-base
 
 
 https://github.com/modelscope/FunASR/blob/main/runtime/readme.md
+
+
+Wyoming Protocol
+
+https://www.home-assistant.io/integrations/wyoming
+
