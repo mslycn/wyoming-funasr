@@ -1,4 +1,4 @@
-# Raspberry Pi 5 + ARM64 + Wyoming + FunASR
+# Raspberry Pi 5 + ARM64 + Wyoming + FunASR - Docker Image
 
 ## Project structre
 ~~~
