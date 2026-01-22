@@ -12,6 +12,16 @@ funasr-wyoming/
         └── docker-arm64.yml
 ~~~
 
+## How to use
+~~~
+docker run -d \
+  --name funasr-wyoming \
+  --restart=unless-stopped \
+  -p 10800:10300 \
+  ghcr.io/mslycn/wyoming-whisper:latest
+
+~~~
+
 Base Images:
 
 ghcr.io/home-assistant/aarch64-homeassistant-base:BASE-VERSION
