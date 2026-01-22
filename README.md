@@ -43,6 +43,14 @@ docker inspect --format '{{.Architecture}}' ghcr.io/mslycn/wyoming-whisper:lates
 ~~~
 
 
+Installation Requirements - funasr
+~~~
+python>=3.8
+torch>=1.13
+torchaudio
+~~~
+source:https://github.com/modelscope/FunASR/tree/main
+
 Base Images:
 
 ghcr.io/home-assistant/aarch64-homeassistant-base:BASE-VERSION
