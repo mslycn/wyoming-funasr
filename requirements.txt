@@ -1,7 +1,9 @@
 funasr==1.0.27
-torch
-torchaudio
+torch==2.1.0+cpu
+torchaudio==2.1.0+cpu
 numpy
 soundfile
 wyoming==1.5.0
+-f https://download.pytorch.org/whl/cpu/torch_stable.html
+
 
