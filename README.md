@@ -55,3 +55,6 @@ https://github.com/home-assistant/docker
 Home Assistant Base Images
 
 https://github.com/home-assistant/docker-base
+
+
+https://github.com/modelscope/FunASR/blob/main/runtime/readme.md
