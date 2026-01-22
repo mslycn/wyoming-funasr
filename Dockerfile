@@ -1,10 +1,9 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base-debian:bookworm 
+ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
 ENV LANG=C.UTF-8
 ENV PYTHONUNBUFFERED=1
 
-# 基础依赖
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
@@ -16,17 +15,12 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Python 依赖
 COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-RUN pip3 install -v --no-cache-dir -r requirements.txt
-
-# 代码
-COPY server.py .
-COPY entrypoint.sh .
+COPY server.py entrypoint.sh ./
+COPY models ./models
 RUN chmod +x entrypoint.sh
 
 EXPOSE 10300
-
 ENTRYPOINT ["./entrypoint.sh"]
-
