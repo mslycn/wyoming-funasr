@@ -27,11 +27,12 @@ docker run -d \
 
 ## Debug
 
-docker rm -f my_running_container
+~~~
 docker run --rm \
   --name funasr-wyoming \
   -p 10800:10300 \
   ghcr.io/mslycn/wyoming-whisper:latest
+~~~
 
 
 Base Images:
