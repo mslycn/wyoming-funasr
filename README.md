@@ -1,3 +1,5 @@
+# Raspberry Pi 5 + ARM64 + Wyoming + FunASR
+
 ## Project structre
 ~~~
 funasr-wyoming/
