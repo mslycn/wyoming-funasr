@@ -28,10 +28,13 @@ docker run -d \
 ## Debug
 
 ~~~
-docker run --rm \
+docker run -it --rm \
   --name funasr-wyoming \
   -p 10800:10300 \
   ghcr.io/mslycn/wyoming-whisper:latest
+
+docker run -it --rm -p 10095:10095 -v /path/to/local/models:/workspace/models modelscope/funasr-runtime-sdk-cpu-0.4.6
+
 ~~~
 
 ~~~
