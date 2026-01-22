@@ -47,6 +47,8 @@ docker run -it --rm -p 10095:10095 -v /path/to/local/models:/workspace/models mo
 
 ~~~
 
+multiarch
+
 ~~~
 docker inspect --format '{{.Architecture}}' ghcr.io/mslycn/wyoming-whisper:latest
 
