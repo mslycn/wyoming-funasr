@@ -18,6 +18,7 @@ WORKDIR /app
 
 # Python 依赖
 COPY requirements.txt .
+RUN pip3 install --upgrade pip setuptools wheel
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # 代码
