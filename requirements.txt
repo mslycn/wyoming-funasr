@@ -1,6 +1,7 @@
-wyoming==1.5.0
 funasr==1.0.27
-torch==2.1.0
+torch
 torchaudio
 numpy
 soundfile
+wyoming==1.5.0
+
