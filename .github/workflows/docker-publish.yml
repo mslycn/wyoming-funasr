@@ -35,7 +35,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -45,4 +44,3 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/funasr-wyoming:latest
             ghcr.io/${{ github.repository_owner }}/funasr-wyoming:${{ github.ref_name }}
-    
