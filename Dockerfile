@@ -9,10 +9,9 @@ RUN \
         python3 \
         python3-dev \
         python3-pip \
-
     \     
     && pip3 install --no-cache-dir \
-        "torch==2.1.0" \
+        torch \
 
 
          
