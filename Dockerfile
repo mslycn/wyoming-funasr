@@ -12,7 +12,7 @@ RUN \
     \
     && python3 -m venv .venv \
     && .venv/bin/pip3 install --no-cache-dir -U \
-        setuptools \
+        torch \
         wheel \
 
 RUN \        
