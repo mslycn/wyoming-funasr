@@ -1,21 +1,28 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base-debian:bookworm
-FROM ${BUILD_FROM}
+FROM debian:bookworm-slim
+ARG TARGETARCH
+ARG TARGETVARIANT
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
     apt-get update \
     && apt-get install -y --no-install-recommends \
-        build-essential \
-        netcat-traditional \
         python3 \
-        python3-dev \
         python3-pip \
-    \     
-    && pip3 install --no-cache-dir \
-        torch \
-
+        python3-venv \
+    \
+    && python3 -m venv .venv \
+    && .venv/bin/pip3 install --no-cache-dir -U \
+        setuptools \
+        wheel \
+    && .venv/bin/pip3 install --no-cache-dir \
+        --extra-index-url 'https://download.pytorch.org/whl/cpu' \
+        'torch==2.6.0' \
+    \
+    && .venv/bin/pip3 install --no-cache-dir \
+        --extra-index-url https://www.piwheels.org/simple \
+        -e '.[transformers,sherpa,onnx-asr]' \
+    \
+    && rm -rf /var/lib/apt/lists/*
 
          
 
