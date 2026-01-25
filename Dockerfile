@@ -10,4 +10,8 @@ RUN \
         python3-dev \
         python3-pip \
 
+RUN \
+    pip3 install torch==2.1.0 \
+         
+
 
