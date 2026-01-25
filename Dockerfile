@@ -17,7 +17,6 @@ RUN \
         torch \
         wheel \
 
-    && rm -rf /var/lib/apt/lists/*
 
          
 
