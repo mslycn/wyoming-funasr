@@ -10,4 +10,4 @@ RUN \
         python3-dev \
         python3-pip \
 
-EXPOSE 10300
+
