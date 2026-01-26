@@ -1,6 +1,7 @@
 Wyoming Protocol 1.8.0
 
 funasr=1.3.0
+
 Paraformer-zh 模型
 
 ## Dockerfile
