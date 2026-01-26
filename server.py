@@ -1,81 +1,107 @@
 import asyncio
-import io
-import numpy as np
-import soundfile as sf
+import logging
+from typing import Optional
 
 from funasr import AutoModel
-
-from wyoming.server import AsyncTcpServer
+from wyoming.asr import AsrStart, AsrStop, Transcript
+from wyoming.audio import AudioChunk, AudioStop
 from wyoming.event import Event
-from wyoming.asr import Transcribe, Transcript
-from wyoming.audio import AudioChunk, AudioStart, AudioStop
+from wyoming.info import AsrModel, AsrProgram, Info, Attribution
+from wyoming.server import AsyncServer
 
+# 配置日志
+logging.basicConfig(level=logging.INFO)
+_LOGGER = logging.getLogger(__name__)
 
-# ===== FunASR 模型 =====
+# 初始化 FunASR 1.3.0 Paraformer 模型
+_LOGGER.info("正在初始化 FunASR 1.3.0 (Paraformer-zh)...")
 model = AutoModel(
-    model="paraformer-zh",
-    vad_model="fsmn-vad",
-    punc_model="ct-punc",
-    device="cpu",
+    model="paraformer-zh", 
+    model_revision="v2.0.4",
+    device="cpu", 
+    disable_update=True
 )
 
-
 class FunASRHandler:
-    def __init__(self):
-        self.audio_bytes = bytearray()
-        self.sample_rate = 16000
+    def __init__(self, reader, writer, info_event: Event):
+        self.reader = reader
+        self.writer = writer
+        self.info_event = info_event
+        self.audio_data = bytearray()
+        self.language: Optional[str] = None
 
-    async def handle_event(self, event: Event):
-        # 音频开始
-        if isinstance(event, AudioStart):
-            self.audio_bytes.clear()
-            self.sample_rate = event.rate or 16000
-            return None
+    async def handle(self):
+        while True:
+            event = await Event.read_event(self.reader)
+            if event is None:
+                break
 
-        # 音频流
-        if isinstance(event, AudioChunk):
-            self.audio_bytes.extend(event.audio)
-            return None
+            # 1. 响应 Describe (Wyoming 1.8.0 握手)
+            if event.type == "describe":
+                await self.info_event.write_event(self.writer)
+                _LOGGER.info("已响应 Describe 请求")
 
-        # 音频结束 → 触发识别
-        if isinstance(event, AudioStop):
-            text = self.run_asr()
-            return Transcript(text=text)
+            # 2. 识别开始信号
+            elif AsrStart.is_event(event):
+                start = AsrStart.from_event(event)
+                self.language = start.language
+                self.audio_data.clear()
+                _LOGGER.info(f"ASR 会话开始 (语言: {self.language})")
 
-        # STT 请求（兼容 HA）
-        if isinstance(event, Transcribe):
-            text = self.run_asr()
-            return Transcript(text=text)
+            # 3. 接收音频切片 (PCM 16bit 16Khz Mono)
+            elif AudioChunk.is_event(event):
+                chunk = AudioChunk.from_event(event)
+                self.audio_data.extend(chunk.audio)
 
-        return None
+            # 4. 音频传输结束，触发推理
+            elif AudioStop.is_event(event) or AsrStop.is_event(event):
+                _LOGGER.info(f"开始推理，音频长度: {len(self.audio_data)} 字节")
+                
+                # FunASR 1.3.0 推理接口
+                res = model.generate(
+                    input=bytes(self.audio_data),
+                    language="zh", 
+                    use_itn=True
+                )
+                
+                # 提取识别文本
+                if res and len(res) > 0:
+                    text = res[0]['text'].strip()
+                else:
+                    text = ""
 
-    def run_asr(self) -> str:
-        if not self.audio_bytes:
-            return ""
+                _LOGGER.info(f"识别结果: {text}")
 
-        # PCM16 → float32
-        audio_np = np.frombuffer(self.audio_bytes, dtype=np.int16).astype(np.float32) / 32768.0
-
-        # FunASR 推理
-        result = model.generate(
-            input=audio_np,
-            sample_rate=self.sample_rate,
-        )
-
-        if not result:
-            return ""
-
-        return result[0].get("text", "")
-
+                # 将结果封装为 Transcript 事件返回给 HA
+                await Transcript(text=text).write_event(self.writer)
+                self.audio_data.clear()
+                break
 
 async def main():
-    server = AsyncTcpServer(
-        host="0.0.0.0",
-        port=10300,
-        handler=FunASRHandler,
-    )
-    await server.run()
+    # 符合 1.8.0 规范的元数据
+    wyoming_info = Info(
+        asr=[
+            AsrProgram(
+                name="FunASR-Paraformer",
+                description="FunASR 1.3.0 with Paraformer-zh",
+                attribution=Attribution(name="Alibaba DAMO", url="https://github.com/alibaba-damo-academy/FunASR"),
+                installed=True,
+                models=[
+                    AsrModel(
+                        name="Paraformer-zh",
+                        description="中文通用语音识别模型",
+                        attribution=Attribution(name="Alibaba", url="https://github.com/alibaba-damo-academy/FunASR"),
+                        installed=True,
+                        languages=["zh"],
+                    )
+                ],
+            )
+        ]
+    ).event()
 
+    server = AsyncServer.from_uri("tcp://0.0.0.0:10300")
+    _LOGGER.info("Wyoming 1.8.0 服务已启动，监听端口: 10300")
+    await server.run(lambda r, w: FunASRHandler(r, w, wyoming_info).handle())
 
 if __name__ == "__main__":
     asyncio.run(main())
