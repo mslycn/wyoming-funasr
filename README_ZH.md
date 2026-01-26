@@ -82,6 +82,15 @@ AsrProgram(
 能返回 transcript
 
 
+Home Assistant 的 Wyoming 集成在启动时会：
+
+连接你的 Wyoming 服务
+
+Wyoming 服务器必须响应 info 事件）
+
+检查返回结果里是否包含 asr program + model + languages
+
+
 
 wyoming ≥ 1.6,新写法是：
 ~~~
