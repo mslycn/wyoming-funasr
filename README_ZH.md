@@ -1,6 +1,9 @@
+Wyoming Protocol 1.8.0
 
+funasr=1.3.0
+Paraformer-zh 模型
 
-Dockerfile
+## Dockerfile
 
 FROM debian:bookworm-slim
 
@@ -66,6 +69,10 @@ AsyncTcpServer(
 )
 
 ~~~
+
+Paraformer-zh 模型：Paraformer-zh 是一个非流式（Non-streaming）模型，非常适合智能家居场景下的短指令识别，具有极高的准确率。
+
+代码严格实现 Wyoming 1.8.0 的握手与传输协议。
 
 
 Home Assistant 的 base-debian 是 multi-arch manifest
