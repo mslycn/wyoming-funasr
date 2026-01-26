@@ -25,7 +25,7 @@ docker run -d \
   --name funasr-wyoming \
   --restart=unless-stopped \
   -p 10800:10300 \
-  ghcr.io/mslycn/wyoming-whisper:latest
+  ghcr.io/mslycn/funasr-wyoming:latest
 
 ~~~
 
