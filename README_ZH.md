@@ -85,11 +85,25 @@ AsrProgram(
 
 Home Assistant 的 Wyoming 集成在启动时会：
 
-连接你的 Wyoming 服务
+连接你的 Wyoming TCP服务
 
-Wyoming 服务器必须响应 info 事件）
+发送 info
 
-检查返回结果里是否包含 asr program + model + languages
+Wyoming 服务器必须响应 info 事件
+
+Home Assistant解析返回的 asr 结构,检查返回结果里是否包含 asr program + model + languages,判断是否支持 STT
+
+如果 info 不返回或者结构不符合，HA 就不会显示你的服务。
+
+Home Assistant 发现流程：
+
+连接 TCP
+
+发送 info
+
+解析返回的 asr 结构
+
+
 
 
 
