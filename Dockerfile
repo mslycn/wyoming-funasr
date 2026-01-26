@@ -12,9 +12,11 @@ RUN apt-get update \
     python3-venv \
  && rm -rf /var/lib/apt/lists/*
 
+# Torch深度学习 / 神经网络计算核心库
 RUN pip3 install --no-cache-dir --break-system-packages \
     torch 
 
+# orchaudio：音频读取、预处理、特征提取、音频增强
 RUN pip3 install --no-cache-dir --break-system-packages \
     torchaudio
 
