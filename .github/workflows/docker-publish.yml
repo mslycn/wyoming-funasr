@@ -49,7 +49,7 @@ jobs:
     # GitHub Actions 里调试容器退出
     - name: Run container
       run: |
-        docker run --rm yourimage || true
+        docker run --rm ghcr.io/mslycn/funasr-wyoming:main || true
         docker ps -a
 
     # logs
