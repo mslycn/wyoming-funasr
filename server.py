@@ -72,7 +72,7 @@ async def main():
     server = AsyncTcpServer(
         host="0.0.0.0",
         port=10300,
-        handler_factory=FunASRHandler,
+        handler_class=FunASRHandler,
     )
     await server.run()
 
