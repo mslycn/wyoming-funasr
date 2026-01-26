@@ -17,6 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    # QEMU：在 x86 runner 上编译 arm64 镜像
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
       with:
