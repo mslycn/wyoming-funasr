@@ -12,6 +12,8 @@ RUN apt-get update \
     python3-venv \
  && rm -rf /var/lib/apt/lists/*
 
+WORKDIR /app 
+
 # Torch深度学习 / 神经网络计算核心库
 RUN pip3 install --no-cache-dir --break-system-packages \
     torch 
@@ -25,6 +27,13 @@ RUN pip3 install --no-cache-dir --break-system-packages \
 
 RUN pip3 install --no-cache-dir --break-system-packages \
     wyoming==1.8.0
+
+# ===== 代码 =====
+COPY server.py .
+
+EXPOSE 10300
+
+ENTRYPOINT ["python3", "server.py"]    
   
 
         
