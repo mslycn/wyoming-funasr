@@ -70,6 +70,14 @@ output
 ~~~
 
 
+Debug - server.py
+~~~
+docker run -it --entrypoint /bin/bash ghcr.io/mslycn/funasr-wyoming:main
+
+/app# python3 server.py
+~~~
+
+
 Installation Requirements - funasr
 ~~~
 python>=3.8
