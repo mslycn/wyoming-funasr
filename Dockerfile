@@ -13,7 +13,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-cache-dir --break-system-packages \
-    torchr==1.13
+    torchr
 
 RUN pip3 install --no-cache-dir --break-system-packages \
     torchaudio
