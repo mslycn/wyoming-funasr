@@ -34,6 +34,7 @@ RUN apt-get update \
 RUN pip3 install --no-cache-dir --break-system-packages \
     funasr==1.3.0
 
+# Install the Wyoming library in your Python environment
 # Peer-to-peer protocol for home assistant voice assistants
 # wyoming 1.8.0: https://pypi.org/project/wyoming/1.8.0/
 # https://github.com/OHF-Voice/wyoming
