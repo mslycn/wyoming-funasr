@@ -45,3 +45,15 @@ jobs:
         tags: |
           ghcr.io/${{ github.repository_owner }}/funasr-wyoming:latest
           ghcr.io/${{ github.repository_owner }}/funasr-wyoming:${{ github.ref_name }}
+
+    # GitHub Actions 里调试容器退出
+    - name: Run container
+      run: |
+        docker run --rm yourimage || true
+        docker ps -a
+
+    # logs
+    - name: Show logs
+      run: docker logs $(docker ps -aq) || true     
+
+          
