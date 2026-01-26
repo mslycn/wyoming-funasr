@@ -23,6 +23,7 @@ jobs:
       with:
         platforms: amd64,arm64
 
+    # buildx：支持 multi-arch build
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
@@ -33,6 +34,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    # push：推送到 GHCR
+    # tags：同时生成 latest 和 vX.X.X
     - name: Build and Push
       uses: docker/build-push-action@v5
       with:
