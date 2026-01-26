@@ -37,7 +37,12 @@ COPY server.py .
 
 EXPOSE 10300
 
-ENTRYPOINT ["python3", "server.py"]    
+# Dockerfile 调试模板
+# -u：关闭缓冲,日志立刻刷出来
+ENTRYPOINT ["python3", "-u", "server.py"]
+
+
+# ENTRYPOINT ["python3", "server.py"]    
   
 
         
