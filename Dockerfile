@@ -4,7 +4,7 @@ ARG TARGETVARIANT
 
 
 
-
+# Docker里绝对不要用 venv,因为Docker 本身就是“超级虚拟环境”
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
     python3 \
@@ -13,7 +13,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install --no-cache-dir --break-system-packages \
-    torchr
+    torch 
 
 RUN pip3 install --no-cache-dir --break-system-packages \
     torchaudio
