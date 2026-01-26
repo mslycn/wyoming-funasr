@@ -78,6 +78,11 @@ docker run -it --entrypoint /bin/bash ghcr.io/mslycn/funasr-wyoming:main
 /app# python3 server.py
 ~~~
 
+~~~
+sudo netstat -pnltu | grep ':10800'
+tcp        0      0 0.0.0.0:10800           0.0.0.0:*               LISTEN      1136319/python3
+~~~
+
 
 Installation Requirements - funasr
 ~~~
