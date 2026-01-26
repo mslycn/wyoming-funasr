@@ -30,6 +30,7 @@ numpy、soundfile：音频处理
 
 ## server.py
 
+how to write a stt server Wyoming=1.8.0 for home assistant voice assistant
 
 Wyoming 1.8.0 事件
 
