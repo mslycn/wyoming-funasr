@@ -47,10 +47,21 @@ docker run -it --rm -p 10095:10095 -v /path/to/local/models:/workspace/models mo
 
 ~~~
 
-multiarch
+CPU Architecture - multiarch
 
 ~~~
-docker inspect --format '{{.Architecture}}' ghcr.io/mslycn/wyoming-whisper:latest
+docker buildx imagetools inspect ghcr.io/mslycn/funasr-wyoming:latest
+
+~~~
+
+output
+
+~~~
+  Platform:    linux/amd64
+               
+  Name:        ghcr.io/mslycn/funasr-wyoming:latest@sha256:8acb1101d7ba1d4ca397de272e26cbd5fb0309ccfc269037ddaa4e38b5bdd37a
+  MediaType:   application/vnd.oci.image.manifest.v1+json
+  Platform:    linux/arm64
 
 ~~~
 
