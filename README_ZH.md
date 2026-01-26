@@ -71,6 +71,16 @@ AsrProgram(
 
 ~~~
 
+要让 HA 识别STT 服务，Wyoming 服务必须：
+
+能被 HA 连接（TCP 10300）
+
+能响应 info / describe
+
+能处理 audio-start / audio-chunk / audio-stop
+
+能返回 transcript
+
 
 
 wyoming ≥ 1.6,新写法是：
