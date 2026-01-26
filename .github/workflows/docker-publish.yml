@@ -42,4 +42,6 @@ jobs:
         context: .
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ghcr.io/${{ github.repository_owner }}/funasr-wyoming:latest
+        tags: |
+          ghcr.io/${{ github.repository_owner }}/funasr-wyoming:latest
+          ghcr.io/${{ github.repository_owner }}/funasr-wyoming:${{ github.ref_name }}
