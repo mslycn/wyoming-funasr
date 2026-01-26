@@ -41,7 +41,7 @@ HA → Settings → Voice → Speech-to-Text
 docker run -it --rm \
   --name funasr-wyoming \
   -p 10800:10300 \
-  ghcr.io/mslycn/wyoming-whisper:latest
+  ghcr.io/mslycn/funasr-wyoming:latest
 
 docker run -it --rm -p 10095:10095 -v /path/to/local/models:/workspace/models modelscope/funasr-runtime-sdk-cpu-0.4.6
 
@@ -51,6 +51,10 @@ CPU Architecture - multiarch
 
 ~~~
 docker buildx imagetools inspect ghcr.io/mslycn/funasr-wyoming:latest
+
+or
+
+docker manifest inspect ghcr.io/mslycn/funasr-wyoming:latest
 
 ~~~
 
