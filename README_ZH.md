@@ -66,3 +66,6 @@ AsyncTcpServer(
 )
 
 ~~~
+
+
+Home Assistant 的 base-debian 是 multi-arch manifest
