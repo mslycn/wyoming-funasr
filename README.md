@@ -1,3 +1,4 @@
+exit
 # Raspberry Pi 5 + ARM64 + Wyoming + FunASR - Docker Image
 
 Integrating FunASR with Home Assistant.Wyoming protocol server for the FunASR speech to text system.
