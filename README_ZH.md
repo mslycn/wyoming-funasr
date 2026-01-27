@@ -37,6 +37,9 @@ non-streaming STT
 Wyoming 1.8.0 事件
 
 Wyoming 1.8.0 -> Speech to Text
+
+代码严格实现 Wyoming 1.8.0 的握手与传输协议。
+
 ~~~
 Speech to Text
 → describe (required)
@@ -99,9 +102,15 @@ Home Assistant 发现流程：
 
 解析返回的 info ->asr 结构
 
+## Wyoming info for stt
+
 Home Assistant's Wyoming integration is quite strict about the Describe/Info handshake.
 
-从 Wyoming 1.8.0 开始，Info 描述是强约束结构体
+从 Wyoming 1.8.0 开始，Info 描述是强约束结构体.
+
+1. Wyoming info 分为 stt 和 tts等多种信息结构。
+2. 本文用到是stt Wyoming info
+3. 经测试，没有返回Wyoming info，或者返回的Wyoming info结构体字段不对，ha无法链接到  Wyoming stt server。
 
  Wyoming info 响应结构(1.8.0)
 ~~~
@@ -251,7 +260,7 @@ Paraformer-zh (v2.0.4)：这是 FunASR 1.3.0 推荐的 Paraformer 中文版本�
 
 内存建议：Paraformer-zh 在运行时约需 800MB - 1.2GB 内存，在树莓派上请注意监控资源。
 
-代码严格实现 Wyoming 1.8.0 的握手与传输协议。
+
 
 ## checklist
 
