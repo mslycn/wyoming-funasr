@@ -101,13 +101,14 @@ Home Assistant 发现流程：
 
 Home Assistant's Wyoming integration is quite strict about the Describe/Info handshake.
 
- Wyoming info 响应结构
+从 Wyoming 1.8.0 开始，Info 描述是强约束结构体
+
+ Wyoming info 响应结构(1.8.0)
 ~~~
 describe - request for available voice services
 
 info
 ├─ asr (optional)
-│  ├─ name
 │  ├─ supports_transcript_streaming
 │  └─ models (required)
 │     ├─ name (required)
@@ -120,20 +121,23 @@ info
 │        └─ url (required)
 
 ~~~
+source:https://pypi.org/project/wyoming/#:~:text=wyoming%201.8.0,Peer%2Dto%2Dpeer%20protocol%20for%20voice%20assistants
 
 ~~~
 Each model within the asr list adheres to the following required fields: 
-name: A unique name for the model.
-languages: A list of supported language codes (e.g., en-US, es-ES).
-attribution: An object containing:
-name: The name of the creator or organization.
-url: A URL for the creator or project.
-installed: A boolean (true if the model is currently installed and ready for use).
-description (optional): A human-readable description of the model.
-version (optional): The version of the model.
+models (required):
+    name: A unique name for the model.
+    languages: A list of supported language codes (e.g., en-US, es-ES).
+    installed: A boolean (true if the model is currently installed and ready for use).
+    description (optional): A human-readable description of the model.
+    version (optional): The version of the model.
+    attribution: An object containing:
+       name: The name of the creator or organization.
+       url: A URL for the creator or project.
+
 supports_transcript_streaming: A boolean (true if the program can stream transcript chunks
 ~~~
-从 Wyoming 1.8.0 开始，Info 描述是强约束结构体
+
 ~~~
  wyoming_info = Info(
         asr=[
