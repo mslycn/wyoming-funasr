@@ -173,30 +173,7 @@ supports_transcript_streaming: A boolean (true if the program can stream transcr
 ~~~
 source:https://github.com/rhasspy/wyoming-faster-whisper/blob/main/wyoming_faster_whisper/__main__.py
 
-~~~
-def build_info() -> Info:
-    return Info(
-        name="MyCustomSTT",
-        description="Custom Wyoming Speech-to-Text Server",
-        asr=AsrProgram(
-            name="mycustomstt",
-            supports_transcript_streaming=False,
-            models=[
-                AsrModel(
-                    name="default",
-                    languages=["en"],
-                    installed=True,
-                    description="Default English ASR model",
-                    version="1.0.0",
-                    attribution=Attribution(
-                        name="Your Name or Organization",
-                        url="https://example.com"
-                    ),
-                )
-            ],
-        ),
-    )
-~~~
+
 
 ~~~
  attribution = Attribution(
@@ -227,6 +204,31 @@ def build_info() -> Info:
                     break
 ~~~
 source:https://github.com/Johnson145/voxtral_wyoming/blob/main/src/voxtral_wyoming/server.py
+
+~~~
+def build_info() -> Info:
+    return Info(
+        name="MyCustomSTT",
+        description="Custom Wyoming Speech-to-Text Server",
+        asr=AsrProgram(
+            name="mycustomstt",
+            supports_transcript_streaming=False,
+            models=[
+                AsrModel(
+                    name="default",
+                    languages=["en"],
+                    installed=True,
+                    description="Default English ASR model",
+                    version="1.0.0",
+                    attribution=Attribution(
+                        name="Your Name or Organization",
+                        url="https://example.com"
+                    ),
+                )
+            ],
+        ),
+    )
+~~~
 
 
 wyoming ≥ 1.6,新写法是：
