@@ -68,21 +68,49 @@ Transcript(text="xxx")
 
 从 Wyoming 1.8.0 开始，Info 描述是强约束结构体
 ~~~
-AsrProgram(
-    name,
-    description,
-    attribution,   ✅ 必填
-    installed,     ✅ 必填
-    version        ✅ 必填
-)
+ wyoming_info = Info(
+        asr=[
+            AsrProgram(
+                name="faster-whisper",
+                description="Faster Whisper transcription with CTranslate2",
+                attribution=Attribution(
+                    name="Guillaume Klein",
+                    url="https://github.com/guillaumekln/faster-whisper/",
+                ),
+                installed=True,
+                version=__version__,
+                models=[
+                    AsrModel(
+                        name=model_name,
+                        description=model_name,
+                        attribution=Attribution(
+                            name="Systran",
+                            url="https://huggingface.co/Systran",
+                        ),
+                        installed=True,
+                        languages=sorted(
+                            list(
+                                # pylint: disable=protected-access
+                                set(faster_whisper.tokenizer._LANGUAGE_CODES).union(
+                                    PARAKEET_LANGUAGES
+                                )
+                            )
+                        ),
+                        version=faster_whisper.__version__,
+                    )
+                ],
+            )
+        ],
+    )
 
 ~~~
+source:https://github.com/rhasspy/wyoming-faster-whisper/blob/main/wyoming_faster_whisper/__main__.py
 
 要让 HA 识别STT 服务，Wyoming 服务必须：
 
 能被 HA 连接（TCP 10300）
 
-能响应 info / describe
+能响应  describe
 
 能处理 audio-start / audio-chunk / audio-stop
 
@@ -93,9 +121,9 @@ Home Assistant Wyoming integration 集成在启动时会：
 
 连接你的 Wyoming TCP服务
 
-发送 info
+发送 describe
 
-Wyoming 服务器必须响应 info 事件
+Wyoming 服务器必须响应 describe 事件,发送 info
 
 Home Assistant解析返回的 asr 结构,检查返回结果里是否包含 asr program + model + languages,判断是否支持 STT
 
@@ -105,13 +133,13 @@ Home Assistant 发现流程：
 
 连接 TCP
 
-发送 info
+发送 escribe
 
-解析返回的 asr 结构
+解析返回的 info ->asr 结构
 
 Home Assistant's Wyoming integration is quite strict about the Describe/Info handshake.
 
-info Wyoming info 响应结构
+ Wyoming info 响应结构
 ~~~
 describe - request for available voice services
 
