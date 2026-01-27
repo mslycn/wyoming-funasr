@@ -131,6 +131,44 @@ info
 
 ~~~
 
+~~~
+Each model within the asr list adheres to the following required fields: 
+name: A unique name for the model.
+languages: A list of supported language codes (e.g., en-US, es-ES).
+attribution: An object containing:
+name: The name of the creator or organization.
+url: A URL for the creator or project.
+installed: A boolean (true if the model is currently installed and ready for use).
+description (optional): A human-readable description of the model.
+version (optional): The version of the model.
+supports_transcript_streaming: A boolean (true if the program can stream transcript chunks
+~~~
+
+~~~
+def build_info() -> Info:
+    return Info(
+        name="MyCustomSTT",
+        description="Custom Wyoming Speech-to-Text Server",
+        asr=AsrProgram(
+            name="mycustomstt",
+            supports_transcript_streaming=False,
+            models=[
+                AsrModel(
+                    name="default",
+                    languages=["en"],
+                    installed=True,
+                    description="Default English ASR model",
+                    version="1.0.0",
+                    attribution=Attribution(
+                        name="Your Name or Organization",
+                        url="https://example.com"
+                    ),
+                )
+            ],
+        ),
+    )
+~~~
+
 
 
 wyoming ≥ 1.6,新写法是：
@@ -150,6 +188,12 @@ Paraformer-zh (v2.0.4)：这是 FunASR 1.3.0 推荐的 Paraformer 中文版本�
 内存建议：Paraformer-zh 在运行时约需 800MB - 1.2GB 内存，在树莓派上请注意监控资源。
 
 代码严格实现 Wyoming 1.8.0 的握手与传输协议。
+
+## checklist
+
+~~~
+netstat -lntp | grep 10300
+~~~
 
 
 Home Assistant 的 base-debian 是 multi-arch manifest
