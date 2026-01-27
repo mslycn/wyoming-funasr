@@ -107,6 +107,24 @@ Home Assistant 发现流程：
 
 Home Assistant's Wyoming integration is quite strict about the Describe/Info handshake.
 
+info
+~~~
+describe - request for available voice services
+
+info - response describing available voice services
+asr - list speech recognition services (optional)
+models - list of available models (required)
+name - unique name (required)
+languages - supported languages by model (list of string, required)
+attribution (required)
+name - name of creator (required)
+url - URL of creator (required)
+installed - true if currently installed (bool, required)
+description - human-readable description (string, optional)
+version - version of the model (string, optional)
+supports_transcript_streaming - true if program can stream transcript chunks
+~~~
+
 
 
 wyoming ≥ 1.6,新写法是：
@@ -129,3 +147,8 @@ Paraformer-zh (v2.0.4)：这是 FunASR 1.3.0 推荐的 Paraformer 中文版本�
 
 
 Home Assistant 的 base-debian 是 multi-arch manifest
+
+Wyoming Protocol 1.8.0
+
+https://github.com/OHF-Voice/wyoming/tree/main
+
