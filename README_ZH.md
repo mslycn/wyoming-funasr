@@ -111,22 +111,24 @@ Home Assistant 发现流程：
 
 Home Assistant's Wyoming integration is quite strict about the Describe/Info handshake.
 
-info
+info Wyoming info 响应结构
 ~~~
 describe - request for available voice services
 
-info - response describing available voice services
-asr - list speech recognition services (optional)
-models - list of available models (required)
-name - unique name (required)
-languages - supported languages by model (list of string, required)
-attribution (required)
-name - name of creator (required)
-url - URL of creator (required)
-installed - true if currently installed (bool, required)
-description - human-readable description (string, optional)
-version - version of the model (string, optional)
-supports_transcript_streaming - true if program can stream transcript chunks
+info
+├─ asr (optional)
+│  ├─ name
+│  ├─ supports_transcript_streaming
+│  └─ models (required)
+│     ├─ name (required)
+│     ├─ languages (required)
+│     ├─ installed (required)
+│     ├─ description (optional)
+│     ├─ version (optional)
+│     └─ attribution (required)
+│        ├─ name (required)
+│        └─ url (required)
+
 ~~~
 
 
