@@ -47,6 +47,10 @@ class CustomSTTHandler(AsyncEventHandler):
         self.audio_buffer = bytearray()
 
     async def handle_event(self, event: Event) -> bool:
+        """
+        Handle incoming events
+        https://github.com/OHF-Voice/wyoming?tab=readme-ov-file#event-types
+        """
         if Describe.is_type(event.type):
             _LOGGER.info("Describe request received")
             await self.write_event(build_info())
