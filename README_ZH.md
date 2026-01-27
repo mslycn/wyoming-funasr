@@ -66,45 +66,7 @@ Transcript(text="xxx")
 ~~~
 
 
-从 Wyoming 1.8.0 开始，Info 描述是强约束结构体
-~~~
- wyoming_info = Info(
-        asr=[
-            AsrProgram(
-                name="faster-whisper",
-                description="Faster Whisper transcription with CTranslate2",
-                attribution=Attribution(
-                    name="Guillaume Klein",
-                    url="https://github.com/guillaumekln/faster-whisper/",
-                ),
-                installed=True,
-                version=__version__,
-                models=[
-                    AsrModel(
-                        name=model_name,
-                        description=model_name,
-                        attribution=Attribution(
-                            name="Systran",
-                            url="https://huggingface.co/Systran",
-                        ),
-                        installed=True,
-                        languages=sorted(
-                            list(
-                                # pylint: disable=protected-access
-                                set(faster_whisper.tokenizer._LANGUAGE_CODES).union(
-                                    PARAKEET_LANGUAGES
-                                )
-                            )
-                        ),
-                        version=faster_whisper.__version__,
-                    )
-                ],
-            )
-        ],
-    )
 
-~~~
-source:https://github.com/rhasspy/wyoming-faster-whisper/blob/main/wyoming_faster_whisper/__main__.py
 
 要让 HA 识别STT 服务，Wyoming 服务必须：
 
@@ -171,6 +133,45 @@ description (optional): A human-readable description of the model.
 version (optional): The version of the model.
 supports_transcript_streaming: A boolean (true if the program can stream transcript chunks
 ~~~
+从 Wyoming 1.8.0 开始，Info 描述是强约束结构体
+~~~
+ wyoming_info = Info(
+        asr=[
+            AsrProgram(
+                name="faster-whisper",
+                description="Faster Whisper transcription with CTranslate2",
+                attribution=Attribution(
+                    name="Guillaume Klein",
+                    url="https://github.com/guillaumekln/faster-whisper/",
+                ),
+                installed=True,
+                version=__version__,
+                models=[
+                    AsrModel(
+                        name=model_name,
+                        description=model_name,
+                        attribution=Attribution(
+                            name="Systran",
+                            url="https://huggingface.co/Systran",
+                        ),
+                        installed=True,
+                        languages=sorted(
+                            list(
+                                # pylint: disable=protected-access
+                                set(faster_whisper.tokenizer._LANGUAGE_CODES).union(
+                                    PARAKEET_LANGUAGES
+                                )
+                            )
+                        ),
+                        version=faster_whisper.__version__,
+                    )
+                ],
+            )
+        ],
+    )
+
+~~~
+source:https://github.com/rhasspy/wyoming-faster-whisper/blob/main/wyoming_faster_whisper/__main__.py
 
 ~~~
 def build_info() -> Info:
@@ -197,6 +198,35 @@ def build_info() -> Info:
     )
 ~~~
 
+~~~
+ attribution = Attribution(
+                    name="Voxtral Wyoming",
+                    url="https://github.com/Johnson145/voxtral_wyoming",
+                )
+                asr_model = AsrModel(
+                    name="voxtral",
+                    attribution=attribution,
+                    installed=True,
+                    description="Offline STT with Mistral Voxtral",
+                    version=VW_VERSION,
+                    languages=SUPPORTED_LANGUAGES,
+                )
+                asr_program = AsrProgram(
+                    name="voxtral-wyoming",
+                    attribution=attribution,
+                    installed=True,
+                    description="Wyoming-compatible STT service",
+                    version=VW_VERSION,
+                    models=[asr_model],
+                    supports_transcript_streaming=False,
+                )
+                try:
+                    await async_write_event(Info(asr=[asr_program]).event(), writer)
+                except (ConnectionResetError, BrokenPipeError, OSError):
+                    _LOGGER.warning("Client disconnected during Info write: %s", addr)
+                    break
+~~~
+source:https://github.com/Johnson145/voxtral_wyoming/blob/main/src/voxtral_wyoming/server.py
 
 
 wyoming ≥ 1.6,新写法是：
