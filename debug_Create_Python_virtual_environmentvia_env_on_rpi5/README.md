@@ -1,6 +1,6 @@
 
 
-Debug step by step
+mini server.py Debug step by step
 
 step 1. test mini server  run ok on rpi5
 
