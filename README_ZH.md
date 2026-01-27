@@ -39,6 +39,10 @@ Wyoming 1.8.0 事件
 Wyoming 1.8.0 -> Speech to Text
 ~~~
 Speech to Text
+→ describe (required)
+← info (required)
+
+
 → transcribe event with name of model to use or language (optional)
 → audio-start (required)
 → audio-chunk (required)
