@@ -85,7 +85,7 @@ AsrProgram(
 能返回 transcript
 
 
-Home Assistant 的 Wyoming 集成在启动时会：
+Home Assistant Wyoming integration 集成在启动时会：
 
 连接你的 Wyoming TCP服务
 
@@ -105,7 +105,7 @@ Home Assistant 发现流程：
 
 解析返回的 asr 结构
 
-
+Home Assistant's Wyoming integration is quite strict about the Describe/Info handshake.
 
 
 
