@@ -1,8 +1,16 @@
 ## Wyoming Protocol stt server for home assistant
 
-Wyoming Protocol 1.8.0
+本地离线中文指令
+
+ESP32-S3-Box-3B
+
+RPi5 / 8GB
 
 funasr=1.3.0
+
+Wyoming Protocol 1.8.0
+
+FunASR SenseVoiceSmall
 
 Paraformer-zh 模型
 
