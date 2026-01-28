@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+"""
+Wyoming Protocol Server4 Test
+
+This tool validates that a Wyoming ASR server properly handles:
+- Audio streaming (AudioStart -> AudioChunk -> AudioStop)
+- Transcription requests
+"""
+
 import os
 import asyncio
 import io
