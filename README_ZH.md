@@ -304,7 +304,7 @@ model = AutoModel(
 读取/保存 (SoundFile)：如果你需要将识别失败的音频存下来调试，你会调用 sf.write('debug.wav', data, samplerate)。
 ~~~
 
-ESP32-S3-Box 3
+1. ESP32-S3-Box 3
 ~~~
 ESP32 采集：双声道，16kHz 或 48kHz。
 
@@ -315,7 +315,7 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 被HA 统一规范化为 单声道 16kHz
 ~~~
 
-Home Assistant 发送到 STT 服务的音频是 Raw PCM (无头原始音频)。
+2. Home Assistant 发送到 STT 服务的音频是 Raw PCM (无头原始音频)。
 
 ~~~
 参数,规格
