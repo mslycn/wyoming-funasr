@@ -1,4 +1,4 @@
-# Deployment Service
+# Deployment Service  Wyoming Protocol Server Test 
 
 mini server.py Debug step by step
 
@@ -31,7 +31,7 @@ https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_e
 
 https://github.com/mslycn/wyoming-funasr/commit/3b2a717e8985108d831a2b73a4e8610b6c1e1575
 
-step 4. test mini server ,connect to ha,load funasr model ,add ncpu=4 for rpi5, run ok , by ha on rpi5
+- step 4. test mini server ,connect to ha,load funasr model ,add ncpu=4 for rpi5, run ok , by ha on rpi5
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server4.py
 
