@@ -306,7 +306,10 @@ VAD 模型：fsmn-vad v2.0.4
 标准化 (NumPy)：将 int16（-32768 到 32767）转换为 float32（-1.0 到 1.0），这是深度学习模型最喜欢的格式。
 
 读取/保存 (SoundFile)：如果你需要将识别失败的音频存下来调试，你会调用 sf.write('debug.wav', data, samplerate)。
+
 ~~~
+
+## Audio Format(input) - Home Assistant sends audio as 16,000Hz, 16-bit, Mono PCM.
 
 1. ESP32-S3-Box 3
 ~~~
