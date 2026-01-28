@@ -118,3 +118,7 @@ funasr
 
 https://github.com/modelscope/FunASR
 
+funasr 1.3.1
+
+https://pypi.org/project/funasr/#:~:text=seconds%20(s).-,SenseVoice,text%22%5D)%20print(text)
+
