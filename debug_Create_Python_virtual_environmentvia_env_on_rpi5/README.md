@@ -6,6 +6,8 @@ step 1. test mini server  run ok on rpi5
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server1.py
 
+https://github.com/mslycn/wyoming-funasr/commit/8ed61504372ea61268bab727085b4b2624342ff4
+
 step 2. test mini server ,connect to ha run ok on rpi5
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server2.py
@@ -19,11 +21,15 @@ homeassistant202405/.storage/core.entity_registry
 +  {"created_at":"2026-01-27T22:55:05.110411+00:00","data":{"host":"192.168.2.125","port":10800},"disabled_by":null,"discovery_keys":{},"domain":"wyoming","entry_id":"01KG0TNVCPTPDSN7YJMYTB78Q7","minor_version":1,"modified_at":"2026-01-27T22:55:05.110415+00:00","options":{},"pref_disable_new_entities":false,"pref_disable_polling":false,"source":"user","subentries":[],"title":"voxtral-wyoming","unique_id":null,"version":1}
 ~~~
 
+https://github.com/mslycn/wyoming-funasr/commit/c2c7c36f57c988d5cf6007151dce1053c9fcfda3
+
 step 3. test mini server ,connect to ha run ok ,load model by haon rpi5
 
 Speech Recognition (non Streaming)
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server3.py
+
+https://github.com/mslycn/wyoming-funasr/commit/3b2a717e8985108d831a2b73a4e8610b6c1e1575
 
 step 4. test mini server ,connect to ha run ok ,can discovered , by haon rpi5
 
