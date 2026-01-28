@@ -22,21 +22,19 @@ Wyoming Whisper 也是用轻量 Debian/Ubuntu base 镜像
 
 2）安装系统依赖
 
+pip3 install wyoming==1.8.0： wyoming协议
+
+pip3 install FunASR==1.3.0： ASR 引擎
+
 FunASR 需要音频处理库：
 
-sox / ffmpeg：音频转码
+torchaudio：PyTorch / ffmpeg：音频转码
 
-libsndfile1：soundfile 依赖
+torch :ai神经网络
 
-build-essential：部分 Python 库需要编译
+numpy
 
-funasr：ASR 引擎
-
-torch + torchaudio：PyTorch
-
-wyoming：协议层
-
-numpy、soundfile：音频处理
+soundfile：音频处理
 
 ## server.py
 
@@ -295,6 +293,16 @@ model = AutoModel(
 ~~~
 
 
+当使用 funasr=1.3.0 识别音频时，内部流程如下：
+~~~
+接收：从 Wyoming 协议接收到 bytearray（原始字节）。
+
+转换 (NumPy)：通过 np.frombuffer(audio_data, dtype=np.int16) 将字节转换成数字数组。
+
+标准化 (NumPy)：将 int16（-32768 到 32767）转换为 float32（-1.0 到 1.0），这是深度学习模型最喜欢的格式。
+
+读取/保存 (SoundFile)：如果你需要将识别失败的音频存下来调试，你会调用 sf.write('debug.wav', data, samplerate)。
+~~~
 
 ## checklist
 
