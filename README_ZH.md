@@ -198,6 +198,7 @@ source:https://github.com/rhasspy/wyoming-faster-whisper/blob/main/wyoming_faste
 ~~~
 source:https://github.com/rhasspy/wyoming-faster-whisper/blob/main/wyoming_faster_whisper/dispatch_handler.py
 
+2. Johnson145/voxtral_wyoming
 
 ~~~
  attribution = Attribution(
