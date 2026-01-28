@@ -304,6 +304,18 @@ model = AutoModel(
 读取/保存 (SoundFile)：如果你需要将识别失败的音频存下来调试，你会调用 sf.write('debug.wav', data, samplerate)。
 ~~~
 
+Home Assistant 发送到 STT 服务的音频是 Raw PCM (无头原始音频)。
+
+~~~
+参数,规格
+容器格式,None (Raw) - 没有 .wav 那种文件头
+编码 (Codec),"PCM_16 (Signed 16-bit, Little Endian)"
+采样率 (Sample Rate),"16,000 Hz (16kHz)"
+声道 (Channels),1 (Mono)
+比特率 (Bitrate),256 kbps (16000 * 16 * 1)
+
+~~~
+
 ## checklist
 
 ~~~
