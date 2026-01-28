@@ -1,5 +1,10 @@
+import os
 import asyncio
+import io
+import soundfile as sf
 import logging
+import datetime
+
 
 from wyoming.asr import Transcribe, Transcript
 from wyoming.audio import AudioStart, AudioChunk, AudioStop
@@ -12,17 +17,43 @@ from wyoming.info import (
     Info,
 )
 from wyoming.server import AsyncTcpServer, AsyncEventHandler
+from funasr import AutoModel
 
-
-
+# ---------------- 1. 日志设置 ----------------
+# ---------------- Logging ----------------
 logging.basicConfig(level=logging.INFO)
 _LOGGER = logging.getLogger("wyoming_stt")
 
-from wyoming.info import Info, AsrProgram, AsrModel, Attribution
+
+
+# ---------------- 2. 全局模型加载 ----------------
+# 在脚本启动时加载一次，确保响应速度
+# ---------------- FunASR Paraformer-zh v2.0.4 ----------------
+_LOGGER.info("%s - start excute AutoModel" % datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3])
+
+
+
+# model_conf
+from funasr import AutoModel
+
+model = AutoModel(
+    model="iic/SenseVoiceSmall",
+    device="cpu",
+    ncpu=4,                # Optimized for Raspberry Pi 5 cores
+    disable_update=True,
+    trust_remote_code=True,
+    vad_model="fsmn-vad",   # Essential for audio > 30s
+    vad_kwargs={"max_single_segment_time": 30000}
+)
 
 
 
 
+
+
+
+
+# ---------------- 3. 事件处理器 ----------------
 class CustomSTTHandler(AsyncEventHandler):
 
     """
@@ -63,15 +94,7 @@ class CustomSTTHandler(AsyncEventHandler):
                   supports_transcript_streaming=False,
              )
 
-             #try:
-             #     await async_write_event(Info(asr=[asr_program]).event(), writer)
-             #except (ConnectionResetError, BrokenPipeError, OSError):
-             #     _LOGGER.warning("Client disconnected during Info write: ")
-
-            # await self.write_event(Info(asr=[asr_program]).event())
-
-
- 
+   
             info = Info(asr=[asr_program])
             await self.write_event(info.event())
             return True
@@ -90,17 +113,57 @@ class CustomSTTHandler(AsyncEventHandler):
             self.audio_buffer.extend(chunk.audio)
             return True
 
+        # ---------------- AudioStop ----------------
         if AudioStop.is_type(event.type):
             _LOGGER.info("AudioStop received. Processing...")
-            result_text = "This is a dummy transcription"
-            await self.write_event(Transcript(text=result_text))
-            return True
+            _LOGGER.info("音频停止，开始识别...")
+            _LOGGER.info("音频接收完成，数据大小: %d bytes", len(self.audio_buffer))
+            
+            audio_bytes_io = io.BytesIO(self.audio_buffer)
+            
+            try:
+                audio, sr = sf.read(
+                    audio_bytes_io, 
+                    samplerate=16000, 
+                    channels=1, 
+                    format='RAW', 
+                    subtype='PCM_16', 
+                    dtype="float32"
+                )
+                
+                # 检查是否为空音频
+                if len(audio) == 0:
+                    _LOGGER.warning("接收到的音频为空")
+                    return False
 
-        if Transcribe.is_type(event.type):
-            _LOGGER.info("Transcribe received")
-            return True
+                # 调用 SenseVoiceSmall 识别
+                # 注意：SenseVoiceSmall 强烈建议开启 is_final=True
+                res = model.generate(
+                    input=audio, 
+                    sampling_rate=16000,
+                    language="zh", 
+                    use_itn=True,
+                    is_final=True
+                )
+                
+                if res and len(res) > 0:
+                    result_text = res[0]["text"]
+                    # 过滤掉 SenseVoice 可能输出的情感/事件标签 (如 <|HAPPY|>)
+                    import re
+                    result_text = re.sub(r'<\|.*?\|>', '', result_text).strip()
+                else:
+                    result_text = ""
+                
+                _LOGGER.info(f"识别结果: {result_text}")
+                await self.write_event(Transcript(text=result_text).event())
+                
+            except Exception as e:
+                _LOGGER.error(f"识别过程出错: {e}", exc_info=True)
+                await self.write_event(Transcript(text="").event())
+            
+            self.audio_buffer.clear()
 
-        return True
+            return True
 
 
 async def main():
