@@ -256,6 +256,10 @@ AsyncTcpServer(
 
 ~~~
 
+## funasr model
+
+1. Paraformer-zh (v2.0.4)  - rpi5 killed 
+
 Paraformer-zh 模型：Paraformer-zh 是一个非流式（Non-streaming）模型，非常适合智能家居场景下的短指令识别，具有极高的准确率。
 
 Paraformer-zh (v2.0.4)：这是 FunASR 1.3.0 推荐的 Paraformer 中文版本，识别率极高，且完全不需要联网（在镜像内已固化）。
