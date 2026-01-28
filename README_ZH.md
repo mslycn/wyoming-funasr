@@ -350,3 +350,7 @@ https://pypi.org/project/wyoming/#:~:text=wyoming%201.8.0,Peer%2Dto%2Dpeer%20pro
 
 https://github.com/modelscope/FunASR
 
+Wyoming info 1.8.0
+
+https://github.com/vrsttl/wyoming-parakeet-silero-wrapper/blob/ce1ac3116135a1d277ec60c59c71bc941c1f4f7d/wyoming_vad_asr_server.py
+
