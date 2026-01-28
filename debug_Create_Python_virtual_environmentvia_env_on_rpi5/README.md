@@ -31,9 +31,11 @@ https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_e
 
 https://github.com/mslycn/wyoming-funasr/commit/3b2a717e8985108d831a2b73a4e8610b6c1e1575
 
-step 4. test mini server ,connect to ha run ok ,can discovered , by haon rpi5
+step 4. test mini server ,connect to ha,load funasr model ,add ncpu=4 for rpi5, run ok , by ha on rpi5
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server4.py
+
+https://github.com/mslycn/wyoming-funasr/commit/819b308d0827811fc62df5533de0d0a252159f1c
 
 step 5. test mini server ,connect to ha run ok ,can discovered ,load model ,4 cpu used by haon rpi5
 
