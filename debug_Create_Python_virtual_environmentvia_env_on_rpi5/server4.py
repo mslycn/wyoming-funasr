@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+"""
+Wyoming Protocol Server4 Test
+
+This tool validates that a Wyoming ASR server properly handles:
+- ncpu=4
+"""
+
 import os
 import asyncio
 import io
