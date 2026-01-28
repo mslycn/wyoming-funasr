@@ -319,7 +319,7 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 被HA 统一规范化为 单声道 16kHz
 ~~~
 
-2. Home Assistant 发送到 STT 服务的音频是 Raw PCM (无头原始音频)。
+2. Home Assistant 发送到 STT 服务的音频是 Raw PCM (无文件头格式原始音频，就是一堆数据)。
 
 ~~~
 参数,规格
@@ -330,6 +330,8 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 比特率 (Bitrate),256 kbps (16000 * 16 * 1)
 
 ~~~
+
+3. Wyoming 送来的音频是： PCM 16kHz mono 如何读取效率最高
 
 ## checklist
 
