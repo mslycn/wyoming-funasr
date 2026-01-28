@@ -2,13 +2,13 @@
 
 mini server.py Debug step by step
 
-step 1. test mini server  run ok on rpi5
+- step 1. test mini server  run ok on rpi5
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server1.py
 
 https://github.com/mslycn/wyoming-funasr/commit/8ed61504372ea61268bab727085b4b2624342ff4
 
-step 2. test mini server ,connect to ha run ok on rpi5
+- step 2. test mini server ,connect to ha run ok on rpi5
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server2.py
 
@@ -23,7 +23,7 @@ homeassistant202405/.storage/core.entity_registry
 
 https://github.com/mslycn/wyoming-funasr/commit/c2c7c36f57c988d5cf6007151dce1053c9fcfda3
 
-step 3. test mini server ,connect to ha run ok ,load model by haon rpi5
+- step 3. test mini server ,connect to ha run ok ,load model by haon rpi5
 
 Speech Recognition (non Streaming)
 
