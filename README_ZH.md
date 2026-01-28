@@ -149,6 +149,7 @@ models (required):
 supports_transcript_streaming: A boolean (true if the program can stream transcript chunks
 ~~~
 
+1. wyoming_faster_whisper
 ~~~
  wyoming_info = Info(
         asr=[
@@ -188,6 +189,14 @@ supports_transcript_streaming: A boolean (true if the program can stream transcr
 ~~~
 source:https://github.com/rhasspy/wyoming-faster-whisper/blob/main/wyoming_faster_whisper/__main__.py
 
+
+~~~
+        if Describe.is_type(event.type):
+            await self.write_event(self.wyoming_info_event)
+            _LOGGER.debug("Sent info")
+            return True
+~~~
+source:https://github.com/rhasspy/wyoming-faster-whisper/blob/main/wyoming_faster_whisper/dispatch_handler.py
 
 
 ~~~
