@@ -279,3 +279,5 @@ https://github.com/OHF-Voice/wyoming/tree/main
 
 https://pypi.org/project/wyoming/#:~:text=wyoming%201.8.0,Peer%2Dto%2Dpeer%20protocol%20for%20voice%20assistants
 
+https://github.com/modelscope/FunASR
+
