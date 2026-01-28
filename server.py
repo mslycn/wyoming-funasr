@@ -1,6 +1,7 @@
 import asyncio
 import logging
 
+# Wyoming protocol 1.8.0 imports
 from wyoming.asr import Transcribe, Transcript
 from wyoming.audio import AudioStart, AudioChunk, AudioStop
 from wyoming.event import Event
