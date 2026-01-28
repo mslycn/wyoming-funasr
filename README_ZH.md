@@ -114,7 +114,7 @@ Home Assistant 发现流程：
 
 Home Assistant's Wyoming integration is quite strict about the Describe/Info handshake.
 
-从 Wyoming 1.8.0 开始，Info 描述是强约束结构体.
+### 从 Wyoming 1.8.0 开始，Info 描述是强约束结构体.
 
 1. Wyoming info 分为 stt 和 tts等多种信息结构。
 2. 本文用到是stt Wyoming info
