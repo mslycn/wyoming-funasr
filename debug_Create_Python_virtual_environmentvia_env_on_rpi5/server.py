@@ -4,7 +4,15 @@ import io
 import soundfile as sf
 import logging
 import datetime
+import time
 
+import torch
+
+# 必须在 import funasr 之前设置
+os.environ["OMP_NUM_THREADS"] = "4"
+os.environ["MKL_NUM_THREADS"] = "4"
+torch.set_num_threads(4)
+torch.set_num_interop_threads(1)
 
 from wyoming.asr import Transcribe, Transcript
 from wyoming.audio import AudioStart, AudioChunk, AudioStop
@@ -34,7 +42,11 @@ _LOGGER.info("%s - start excute AutoModel" % datetime.datetime.now().strftime("%
 
 
 # model_conf
-from funasr import AutoModel
+
+
+start_model = time.time()
+
+model_dir = "/root/.cache/modelscope/hub/iic/SenseVoiceSmall"
 
 model = AutoModel(
     model="iic/SenseVoiceSmall",
@@ -42,10 +54,13 @@ model = AutoModel(
     ncpu=4,                # Optimized for Raspberry Pi 5 cores
     disable_update=True,
     trust_remote_code=True,
-    vad_model="fsmn-vad",   # Essential for audio > 30s
-    vad_kwargs={"max_single_segment_time": 30000}
+    # vad_model="fsmn-vad",   # Essential for audio > 30s
+    # vad_kwargs={"max_single_segment_time": 30000}
 )
 
+end_model = time.time()
+load_time_ms = (end_model - start_model) * 1000
+print(f'加载模型SenseVoiceSmall耗时 {load_time_ms:.2f} 毫秒')
 
 
 
@@ -70,25 +85,27 @@ class CustomSTTHandler(AsyncEventHandler):
     async def handle_event(self, event: Event) -> bool:
         if Describe.is_type(event.type):
             _LOGGER.info("Describe request received：Received Describe event from client")
+        
+            print(f'Describe request received：Received Describe event from client')
 
              # see:https://github.com/Johnson145/voxtral_wyoming/blob/main/src/voxtral_wyoming/server.py
             attribution = Attribution(
-                 name="Voxtral Wyoming",
-                 url="https://github.com/Johnson145/voxtral_wyoming",
+                 name="FunASR Wyoming",
+                 url="https://github.com/mslycn/wyoming-funasr",
              )
             asr_model = AsrModel(
-                  name="voxtral",
+                  name="SenseVoiceSmall",
                   attribution=attribution,
                   installed=True,
-                  description="Offline STT with Mistral Voxtral",
+                  description="Offline STT with FunASR SenseVoiceSmall",
                   version="1.0.0",
                   languages=["zh"],
              )
             asr_program = AsrProgram(
-                  name="voxtral-wyoming",
+                  name="funasr-wyoming",
                   attribution=attribution,
                   installed=True,
-                  description="Wyoming-compatible STT service",
+                  description="Wyoming-compatible FunASR STT service",
                   version="1.0.0",
                   models=[asr_model],
                   supports_transcript_streaming=False,
@@ -118,6 +135,7 @@ class CustomSTTHandler(AsyncEventHandler):
             _LOGGER.info("AudioStop received. Processing...")
             _LOGGER.info("音频停止，开始识别...")
             _LOGGER.info("音频接收完成，数据大小: %d bytes", len(self.audio_buffer))
+            print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - AudioStop received. Processing...")
             
             audio_bytes_io = io.BytesIO(self.audio_buffer)
             
@@ -134,6 +152,7 @@ class CustomSTTHandler(AsyncEventHandler):
                 # 检查是否为空音频
                 if len(audio) == 0:
                     _LOGGER.warning("接收到的音频为空")
+                    print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 接收到的音频为空...")
                     return False
 
                 # 调用 SenseVoiceSmall 识别
@@ -143,9 +162,11 @@ class CustomSTTHandler(AsyncEventHandler):
                     sampling_rate=16000,
                     language="zh", 
                     use_itn=True,
-                    is_final=True
+                    is_final=True,
+                    batch_size=1,
                 )
                 
+                print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 过滤掉 SenseVoice 可能输出的情感/事件标签")
                 if res and len(res) > 0:
                     result_text = res[0]["text"]
                     # 过滤掉 SenseVoice 可能输出的情感/事件标签 (如 <|HAPPY|>)
@@ -154,11 +175,14 @@ class CustomSTTHandler(AsyncEventHandler):
                 else:
                     result_text = ""
                 
-                _LOGGER.info(f"识别结果: {result_text}")
+                _LOGGER.info(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别结果: {result_text}")
+                
+                print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别结果: {result_text}")
                 await self.write_event(Transcript(text=result_text).event())
                 
             except Exception as e:
                 _LOGGER.error(f"识别过程出错: {e}", exc_info=True)
+                print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别过程出错")
                 await self.write_event(Transcript(text="").event())
             
             self.audio_buffer.clear()
