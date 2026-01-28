@@ -37,6 +37,8 @@ https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_e
 
 https://github.com/mslycn/wyoming-funasr/commit/819b308d0827811fc62df5533de0d0a252159f1c
 
+server.py https://github.com/mslycn/wyoming-funasr/commit/bcc8303e658bec0fb4bf7030cc80223a2924bafa
+
 step 5. test mini server ,connect to ha run ok ,can discovered ,load model ,4 cpu used by haon rpi5
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server5.py
