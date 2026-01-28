@@ -292,6 +292,10 @@ model = AutoModel(
     )
 ~~~
 
+VAD 模型：fsmn-vad v2.0.4
+
+标点模型：ct-punc v2.0.4
+
 
 当使用 funasr=1.3.0 识别音频时，内部流程如下：
 ~~~
