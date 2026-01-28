@@ -115,5 +115,6 @@ Wyoming Protocol
 https://www.home-assistant.io/integrations/wyoming
 
 funasr
+
 https://github.com/modelscope/FunASR
 
