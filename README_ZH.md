@@ -344,6 +344,45 @@ DEBUG:sherpa_onnx_addon:Received event: Event(type='audio-chunk', data={'rate': 
 
 ## Speech Recognition (no Streaming)
 
+1. Home Assistant Wyoming integration（client）
+~~~
+import sounddevice as sd
+from wyoming.client import AsyncClient
+from wyoming.audio import AudioStart, AudioChunk, AudioStop
+from wyoming.event import Event
+import asyncio
+
+RATE = 16000
+CHANNELS = 1
+WIDTH = 2
+
+async def stream_mic():
+    async with AsyncClient.from_uri("tcp://localhost:10200") as client:
+        await client.write_event(AudioStart(rate=RATE, width=WIDTH, channels=CHANNELS).event())
+
+        def callback(indata, frames, time, status):
+            chunk = AudioChunk(audio=indata.tobytes(), rate=RATE, width=WIDTH, channels=CHANNELS)
+            asyncio.create_task(client.write_event(chunk.event()))
+
+        with sd.InputStream(callback=callback, channels=CHANNELS, samplerate=RATE):
+            await asyncio.sleep(5)  # Record for 5 seconds
+
+        await client.write_event(AudioStop().event())
+        response = await client.read_event()
+        print("Transcription:", response.data["text"])
+
+asyncio.run(stream_mic())
+~~~
+发送了3个事件，- AudioStart- AudioChunk- AudioStop
+
+2. stt server（server）
+
+需要对三个事件先做出处理、然后进行回应
+- AudioStart
+- AudioChunk
+- AudioStop
+
+
 不用 soundfile（快 2–3 倍）
 
 ## checklist
