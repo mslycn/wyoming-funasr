@@ -342,6 +342,17 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 DEBUG:sherpa_onnx_addon:Received event: Event(type='audio-chunk', data={'rate': 16000, 'width': 2, 'channels': 1, 'timestamp': None}, 
 ~~~
 
+~~~
+AudioChunk(
+    audio=bytes,
+    rate=16000,
+    width=2,
+    channels=1
+)
+
+~~~
+width = 2 = 16-bit PCM（int16）,每个 sample = 2 字节.signed int16,不带 header，纯 PCM,是STT server（Vosk / FunASR / Whisper）默认且最稳的格式
+
 ## Speech Recognition (no Streaming)
 
 1. Home Assistant Wyoming integration（client）
