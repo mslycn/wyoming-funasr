@@ -336,6 +336,10 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 
 3. Wyoming 送来的音频是： PCM 16kHz mono 如何读取效率最高
 
+~~~
+DEBUG:sherpa_onnx_addon:Received event: Event(type='audio-chunk', data={'rate': 16000, 'width': 2, 'channels': 1, 'timestamp': None}, 
+~~~
+
 ## checklist
 
 ~~~
