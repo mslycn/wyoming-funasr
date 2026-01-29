@@ -16,7 +16,7 @@ funasr=1.3.0
 
 ## Dockerfile
 
-FROM debian:bookworm-slim
+1）FROM debian:bookworm-slim
 
 Wyoming Whisper 也是用轻量 Debian/Ubuntu base 镜像
 
@@ -32,7 +32,7 @@ torchaudio：PyTorch / ffmpeg：音频转码
 
 torch :ai神经网络
 
-numpy
+numpy : 音频处理
 
 soundfile：音频处理
 
