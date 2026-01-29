@@ -342,6 +342,8 @@ DEBUG:sherpa_onnx_addon:Received event: Event(type='audio-chunk', data={'rate': 
 
 ## Speech Recognition (no Streaming)
 
+不用 soundfile（快 2–3 倍）
+
 ## checklist
 
 ~~~
