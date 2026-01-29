@@ -90,23 +90,25 @@ Transcript(text="xxx")
 能返回 transcript
 
 
-Home Assistant Wyoming integration 集成在启动时会：
+## step 1. Home Assistant添加Wyoming integration
 
-连接你的 Wyoming TCP服务
+### Home Assistant Wyoming integration 集成在启动时会：
 
-发送 describe
+HA连接你的 Wyoming server TCP服务
 
-Wyoming 服务器必须响应 describe 事件,发送 info
+HA发送 describe事件 -> Wyoming server
 
-Home Assistant解析返回的 asr 结构,检查返回结果里是否包含 asr program + model + languages,判断是否支持 STT
+Wyoming server 服务器必须响应 describe 事件,发送Wyoming info 信息结构
 
-如果 info 不返回或者结构不符合，HA 就不会显示你的服务。
+Home Assistant解析返回的Wyoming info(Wyoming info for asr) 结构,检查返回结果里是否包含 asr program + model + languages,判断是否支持 STT
 
-Home Assistant 发现流程：
+如果 Wyoming info不返回或者结构不符合HA的要求，HA 就不会显示服务。
+
+### Home Assistant 发现流程：
 
 连接 TCP
 
-发送 escribe
+发送 describe
 
 解析返回的 info ->asr 结构
 
