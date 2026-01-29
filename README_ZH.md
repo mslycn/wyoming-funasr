@@ -375,6 +375,8 @@ asyncio.run(stream_mic())
 ~~~
 发送了3个事件，- AudioStart- AudioChunk- AudioStop
 
+source:https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to-transcript
+
 2. stt server（server）
 
 需要对三个事件先做出处理、然后进行回应
