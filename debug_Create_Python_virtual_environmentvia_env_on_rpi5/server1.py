@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+"""
+Wyoming Protocol Server Test
+Tests Wyoming service discovery and protocol compliance
+
+This tool validates that a Wyoming ASR server properly handles:
+- Wyoming Event Types
+"""
+
 import asyncio
 import logging
 
