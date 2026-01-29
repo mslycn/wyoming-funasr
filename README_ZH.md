@@ -340,6 +340,8 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 DEBUG:sherpa_onnx_addon:Received event: Event(type='audio-chunk', data={'rate': 16000, 'width': 2, 'channels': 1, 'timestamp': None}, 
 ~~~
 
+## Speech Recognition (no Streaming)
+
 ## checklist
 
 ~~~
