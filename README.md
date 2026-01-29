@@ -93,10 +93,6 @@ torchaudio
 ~~~
 source:https://github.com/modelscope/FunASR/tree/main
 
-Base Images:
-
-ghcr.io/home-assistant/aarch64-homeassistant-base:BASE-VERSION
-ghcr.io/home-assistant/amd64-homeassistant-base:BASE-VERSION
 
 source:
 
@@ -105,6 +101,10 @@ https://github.com/home-assistant/docker
 - Home Assistant Base Images
 
 https://github.com/home-assistant/docker-base
+
+ghcr.io/home-assistant/aarch64-homeassistant-base:BASE-VERSION
+
+ghcr.io/home-assistant/amd64-homeassistant-base:BASE-VERSION
 
 - Wyoming Protocol
 
