@@ -62,6 +62,7 @@ model = AutoModel(
     ncpu=4,                # Optimized for Raspberry Pi 5 cores
     disable_update=True,
     trust_remote_code=True,
+ 
     # vad_model="fsmn-vad",   # Essential for audio > 30s
     # vad_kwargs={"max_single_segment_time": 30000}
 )
@@ -95,6 +96,7 @@ class CustomSTTHandler(AsyncEventHandler):
             _LOGGER.info("Describe request received：Received Describe event from client")
         
             print(f'Describe request received：Received Describe event from client')
+            print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - Describe Event received. Processing...") 
 
              # see:https://github.com/Johnson145/voxtral_wyoming/blob/main/src/voxtral_wyoming/server.py
             attribution = Attribution(
@@ -122,10 +124,13 @@ class CustomSTTHandler(AsyncEventHandler):
    
             info = Info(asr=[asr_program])
             await self.write_event(info.event())
+            self.audio_buffer.clear()
+            
             return True
 
         if Transcribe.is_type(event.type):
             _LOGGER.info("Transcribe received")
+            print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - Transcribe Event received. ")
             return True
 
         if AudioStart.is_type(event.type):
@@ -135,15 +140,20 @@ class CustomSTTHandler(AsyncEventHandler):
             return True
 
         if AudioChunk.is_type(event.type):
+            # print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - AudioChunk Event received. ")
             chunk = AudioChunk.from_event(event)
             self.audio_buffer.extend(chunk.audio)
             return True
+     
+            # https://github.com/kroko-ai/kroko-onnx-home-assistant/blob/main/run.py
+ 
 
  # ---------------- AudioStop (Optimized with NumPy) ----------------
         if AudioStop.is_type(event.type):
             _LOGGER.info(f"Processing {len(self.audio_buffer)} bytes of audio...")
             print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - AudioStop received. Processing...")
 
+           
             if not self.audio_buffer:
                 await self.write_event(Transcript(text="").event())
                 return False
@@ -151,6 +161,19 @@ class CustomSTTHandler(AsyncEventHandler):
             try:
                 # Direct NumPy conversion: Bytes -> Int16 -> Float32 Normalization
                 audio = np.frombuffer(self.audio_buffer, dtype=np.int16).astype(np.float32) / 32768.0
+
+                # -------------------------
+                # 打印音频长度
+                # -------------------------
+                samples = audio.shape[0]
+                seconds = samples / 16000.0
+                print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 音频长度: {samples} samples, {seconds:.2f} 秒")
+                _LOGGER.info(f"Audio length: {samples} samples, {seconds:.2f} s")
+
+                # 裁剪为 3 秒
+                max_len = 16000 * 3
+                if audio.shape[0] > max_len:
+                     audio = audio[-max_len:]
 
                 # Inference
                 res = model.generate(
