@@ -298,6 +298,25 @@ VAD 模型：fsmn-vad v2.0.4
 
 标点模型：ct-punc v2.0.4
 
+3. model  download
+
+~~~
+model = AutoModel(
+    model=model_dir,
+    vad_model="fsmn-vad",
+    vad_kwargs={"max_single_segment_time": 30000},
+    device="cuda:0",
+)
+~~~
+   
+ model_dir: The name of the model, or the path to the model on the local disk.
+
+ 在 FunASR 1.3.0 中，AutoModel 的 model 参数设计灵活：既可以是模型 ID（如 model_id = 'iic/SenseVoiceSmall'），也可以接收本地磁盘路径（local_dir = './models/SenseVoiceSmall'）。
+
+ 
+
+ source:https://github.com/modelscope/FunASR
+
 
 当使用 funasr=1.3.0 识别音频时，内部流程如下：
 ~~~
