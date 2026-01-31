@@ -309,9 +309,12 @@ model = AutoModel(
 )
 ~~~
    
- model_dir: The name of the model, or the path to the model on the local disk.
+model_dir: The name of the model, or the path to the model on the local disk.
 
- 在 FunASR 1.3.0 中，AutoModel 的 model 参数设计灵活：既可以是模型 ID（如 model_id = 'iic/SenseVoiceSmall'），也可以接收本地磁盘路径（local_dir = './models/SenseVoiceSmall'）。
+model=model_dir: model_dir可以是字符串 ID，也可以是绝对/相对路径
+
+在 FunASR 1.3.0 中，AutoModel 的 model 参数设计灵活：既可以是模型 ID（如 model_id = 'iic/SenseVoiceSmall'），也可以接收本地磁盘路径（local_dir = './models/SenseVoiceSmall'）。
+
 
  
 
