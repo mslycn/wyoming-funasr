@@ -2,6 +2,11 @@
 
 mini server.py Debug step by step
 
+- server.py
+
+https://github.com/mslycn/wyoming-funasr/commit/fb5f2460060f0afaf901abe876897623c315b75d
+  
+
 - step 1. test mini server  run ok on rpi5
 
 https://github.com/mslycn/wyoming-funasr/blob/main/debug_Create_Python_virtual_environmentvia_env_on_rpi5/server1.py
