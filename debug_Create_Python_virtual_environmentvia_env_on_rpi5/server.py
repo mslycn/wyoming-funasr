@@ -1,10 +1,20 @@
+#!/usr/bin/env python3
+"""
+Wyoming Protocol Server4 Test
+
+This tool validates that a Wyoming ASR server properly handles:
+- ncpu=4
+"""
+
 import os
 import asyncio
 import io
 import soundfile as sf
+import numpy as np
 import logging
 import datetime
 import time
+import re
 
 import torch
 
@@ -29,9 +39,7 @@ from funasr import AutoModel
 
 # ---------------- 1. 日志设置 ----------------
 # ---------------- Logging ----------------
-logging.basicConfig(level=logging.INFO)
-_LOGGER = logging.getLogger("wyoming_stt")
-
+_LOGGER = logging.getLogger(__name__)
 
 
 # ---------------- 2. 全局模型加载 ----------------
@@ -122,6 +130,7 @@ class CustomSTTHandler(AsyncEventHandler):
 
         if AudioStart.is_type(event.type):
             _LOGGER.info("AudioStart received")
+            print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - AudioStart Event received. Processing...")
             self.audio_buffer.clear()
             return True
 
@@ -130,33 +139,20 @@ class CustomSTTHandler(AsyncEventHandler):
             self.audio_buffer.extend(chunk.audio)
             return True
 
-        # ---------------- AudioStop ----------------
+ # ---------------- AudioStop (Optimized with NumPy) ----------------
         if AudioStop.is_type(event.type):
-            _LOGGER.info("AudioStop received. Processing...")
-            _LOGGER.info("音频停止，开始识别...")
-            _LOGGER.info("音频接收完成，数据大小: %d bytes", len(self.audio_buffer))
+            _LOGGER.info(f"Processing {len(self.audio_buffer)} bytes of audio...")
             print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - AudioStop received. Processing...")
-            
-            audio_bytes_io = io.BytesIO(self.audio_buffer)
-            
-            try:
-                audio, sr = sf.read(
-                    audio_bytes_io, 
-                    samplerate=16000, 
-                    channels=1, 
-                    format='RAW', 
-                    subtype='PCM_16', 
-                    dtype="float32"
-                )
-                
-                # 检查是否为空音频
-                if len(audio) == 0:
-                    _LOGGER.warning("接收到的音频为空")
-                    print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 接收到的音频为空...")
-                    return False
 
-                # 调用 SenseVoiceSmall 识别
-                # 注意：SenseVoiceSmall 强烈建议开启 is_final=True
+            if not self.audio_buffer:
+                await self.write_event(Transcript(text="").event())
+                return False
+
+            try:
+                # Direct NumPy conversion: Bytes -> Int16 -> Float32 Normalization
+                audio = np.frombuffer(self.audio_buffer, dtype=np.int16).astype(np.float32) / 32768.0
+
+                # Inference
                 res = model.generate(
                     input=audio, 
                     sampling_rate=16000,
@@ -169,25 +165,25 @@ class CustomSTTHandler(AsyncEventHandler):
                 print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 过滤掉 SenseVoice 可能输出的情感/事件标签")
                 if res and len(res) > 0:
                     result_text = res[0]["text"]
-                    # 过滤掉 SenseVoice 可能输出的情感/事件标签 (如 <|HAPPY|>)
-                    import re
+                    # Regex to strip emotional/event tags like <|HAPPY|>
                     result_text = re.sub(r'<\|.*?\|>', '', result_text).strip()
                 else:
                     result_text = ""
-                
-                _LOGGER.info(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别结果: {result_text}")
-                
+                    print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 接收到的音频为空...")     
+          
+                _LOGGER.info(f"Result: {result_text}")
                 print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别结果: {result_text}")
                 await self.write_event(Transcript(text=result_text).event())
                 
             except Exception as e:
-                _LOGGER.error(f"识别过程出错: {e}", exc_info=True)
+                _LOGGER.error(f"Inference error: {e}", exc_info=True)
                 print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别过程出错")
                 await self.write_event(Transcript(text="").event())
             
             self.audio_buffer.clear()
+            return False # Close session after transcription
 
-            return True
+        return True
 
 
 async def main():
