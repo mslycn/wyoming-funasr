@@ -436,7 +436,11 @@ source:https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to
 
 
 ## 优化点
-- 不用 soundfile（快 2–3 倍）
+- 不用 soundfile（快 2–3 倍），换NumPy
+- audiochunk  实时解析
+- 
+- 模型本地加载
+- 模型预热
 - 模型换funasr-onnx （快 2–3 倍）
 
 ## checklist
