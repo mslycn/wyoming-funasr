@@ -434,6 +434,55 @@ source:https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to
 - AudioChunk
 - AudioStop
 
+AudioStop (soundfile）
+~~~
+# ---------------- AudioStop (Optimized with NumPy) ----------------
+        if AudioStop.is_type(event.type):
+            _LOGGER.info(f"Processing {len(self.audio_buffer)} bytes of audio...")
+            print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - AudioStop received. Processing...")
+
+            if not self.audio_buffer:
+                await self.write_event(Transcript(text="").event())
+                return False
+
+            try:
+                # Direct NumPy conversion: Bytes -> Int16 -> Float32 Normalization
+                audio = np.frombuffer(self.audio_buffer, dtype=np.int16).astype(np.float32) / 32768.0
+
+                # Inference
+                res = model.generate(
+                    input=audio, 
+                    sampling_rate=16000,
+                    language="zh", 
+                    use_itn=True,
+                    is_final=True,
+                    batch_size=1,
+                )
+                
+                print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 过滤掉 SenseVoice 可能输出的情感/事件标签")
+                if res and len(res) > 0:
+                    result_text = res[0]["text"]
+                    # Regex to strip emotional/event tags like <|HAPPY|>
+                    result_text = re.sub(r'<\|.*?\|>', '', result_text).strip()
+                else:
+                    result_text = ""
+                    print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 接收到的音频为空...")     
+          
+                _LOGGER.info(f"Result: {result_text}")
+                print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别结果: {result_text}")
+                await self.write_event(Transcript(text=result_text).event())
+                
+            except Exception as e:
+                _LOGGER.error(f"Inference error: {e}", exc_info=True)
+                print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别过程出错")
+                await self.write_event(Transcript(text="").event())
+            
+            self.audio_buffer.clear()
+            return False # Close session after transcription
+
+        return True
+~~~
+
 ### AudioStop (Optimized with NumPy
 ~~~
 # ---------------- AudioStop (Optimized with NumPy) ----------------
