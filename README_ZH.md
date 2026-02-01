@@ -36,6 +36,8 @@ numpy : 音频处理
 
 soundfile：音频处理
 
+libsndfile： Soundfile 基于强大的库libsndfile 
+
 ## server.py
 
 how to write a stt server Wyoming=1.8.0 for home assistant voice assistant.
