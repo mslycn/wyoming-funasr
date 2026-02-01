@@ -36,7 +36,9 @@ numpy : 音频处理
 
 soundfile：音频处理
 
-libsndfile： Soundfile 基于强大的库libsndfile 
+           libsndfile： Soundfile 基于强大的库libsndfile 
+
+Librosa： 它在底层同时封装了 NumPy 和 Soundfile，更适合工程化使用。
 
 ## server.py
 
@@ -335,7 +337,7 @@ model=model_dir: model_dir可以是字符串 ID，也可以是绝对/相对路�
 
 ~~~
 
-## Audio Format(input) - Home Assistant sends audio as 16,000Hz, 16-bit, Mono PCM.
+### Audio Format(input) - Home Assistant sends audio as 16,000Hz, 16-bit, Mono PCM.
 
 1. ESP32-S3-Box 3
 ~~~
@@ -348,7 +350,7 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 被HA 统一规范化为 单声道 16kHz
 ~~~
 
-2. Home Assistant 发送到 STT 服务的音频是 Raw PCM (无文件头格式原始音频，就是一堆数据)。
+2. Home Assistant Wyoming Integration 发送到 STT 服务的音频是 Raw PCM (无文件头格式原始音频，就是一堆数据)。
 
 ~~~
 参数,规格
@@ -377,7 +379,16 @@ AudioChunk(
 ~~~
 width = 2 = 16-bit PCM（int16）,每个 sample = 2 字节.signed int16,不带 header，纯 PCM,是STT server（Vosk / FunASR / Whisper）默认且最稳的格式
 
-## Speech Recognition (no Streaming)
+### 音频的读取
+
+音频在计算机中本质上是一串数值（振幅）。当你使用 NumPy 时，你可以直接操作这些数字。
+
+处理已经加载好的数据： 用 NumPy。FunASR 的模型推理接口（model.generate）接收的标准数据格式就是 NumPy 数组 - 性能提升点1
+
+处理硬盘里的文件变成数据： 你必须用 Soundfile。用于**“读入”**。将硬盘里的 .wav 文件加载进内存。
+
+
+### Speech Recognition (no Streaming)
 
 1. Home Assistant Wyoming integration（client）
 ~~~
