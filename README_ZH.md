@@ -435,7 +435,9 @@ source:https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to
 - AudioStop
 
 
-不用 soundfile（快 2–3 倍）
+## 优化点
+- 不用 soundfile（快 2–3 倍）
+- 模型换funasr-onnx （快 2–3 倍）
 
 ## checklist
 
