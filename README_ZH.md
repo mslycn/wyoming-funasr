@@ -324,6 +324,10 @@ model=model_dir: model_dir可以是字符串 ID，也可以是绝对/相对路�
 
  source:https://github.com/modelscope/FunASR
 
+ 4. funasr-onnx  模型优化
+
+
+
 
 当使用 funasr=1.3.0 识别音频时，内部流程如下：
 ~~~
