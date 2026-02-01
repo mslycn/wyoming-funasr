@@ -435,8 +435,8 @@ source:https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to
 - AudioStop
 
 
-## 优化点
-- 不用 soundfile（快 2–3 倍），换NumPy
+## 优化点 Optimized
+- 不用 soundfile（快 2–3 倍），换NumPy -  AudioStop (Optimized with NumPy) 
 - audiochunk  实时解析
 - 
 - 模型本地加载
