@@ -538,6 +538,9 @@ AudioStop (soundfile）
 - 
 - 模型本地加载
 - 模型预热
+- 模型参数优化 - 4cpu # Optimized for Raspberry Pi 5 cores
+- 模型参数优化 - disable_update=True # 禁止联网检查更新
+- 
 - 模型换funasr-onnx （快 2–3 倍）
 
 ## checklist
