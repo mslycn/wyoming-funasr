@@ -2,9 +2,13 @@
 
 funasr-onnx 是 FunASR 框架的“轻量化部署版”。它们的关系就像是模具与成品的关系。
 
-### FunASR (PyTorch 版): 基于 PyTorch 框架，主要用于模型的训练、微调以及研究。模型文件通常是 .pb 或 .pt 格式。
+### FunASR (PyTorch 版)
 
-### funasr-onnx:  ONNX 是一种通用格式，脱离了 PyTorch 的重型环境。一个专门的推理库。它将 FunASR 中的预训练模型导出为 ONNX (Open Neural Network Exchange) 格式。
+基于 PyTorch 框架，主要用于模型的训练、微调以及研究。模型文件通常是 .pb 或 .pt 格式。
+
+### funasr-onnx
+
+ONNX 是一种通用格式，脱离了 PyTorch 的重型环境。一个专门的推理库。它将 FunASR 中的预训练模型导出为 ONNX (Open Neural Network Exchange) 格式。
 使用 funasr-onnx 时，不需要安装庞大的 PyTorch，只需要一个轻量的推理引擎（如 ONNX Runtime）。
 
 在 CPU 环境下，ONNX 的推理速度通常比 PyTorch 快 2-3 倍。
