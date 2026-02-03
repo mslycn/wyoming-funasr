@@ -14,11 +14,9 @@ ONNX 是一种通用格式，脱离了 PyTorch 的重型环境。一个专门的
 在 CPU 环境下，ONNX 的推理速度通常比 PyTorch 快 2-3 倍。
 
 
-
-
 ### sherpa-onnx
 
-sherpa-onnx: 一个开源项目，提供离线的语音识别、文本转语音、说话人识别和语音活动检测（VAD）功能。项目基于下一代 Kaldi 和 onnxruntime，支持多种平台和操作系统，包括嵌入式系统、Android、iOS、Raspberry Pi、RISC-V 和 x86_64 服务器。
+sherpa-onnx: 一个开源项目，Sherpa-ONNX 语音识别服务器.提供离线的语音识别、文本转语音、说话人识别和语音活动检测（VAD）功能。项目基于下一代 Kaldi 和 onnxruntime，支持多种平台和操作系统，包括嵌入式系统、Android、iOS、Raspberry Pi、RISC-V 和 x86_64 服务器。using onnx with onnxruntime to replace PyTorch
 
 sherpa-onnx 支持多种编程语言，包括：C++  Python C#
 
@@ -26,8 +24,19 @@ sherpa-onnx 支持多种编程语言，包括：C++  Python C#
 
 项目使用的技术: onnxruntime: 用于神经网络计算的 ONNX 运行时，替代 PyTorch 进行模型推理。WebSocket: 用于实时通信。
 
+sherpa-onnx-asr和funasr的效果基本一样，但内存占用仅不到1g，而funasr占用3g起步。替换后可以大大降低配置需求.
 
-## Install
+
+## Install   sherpa-onnx CPU篇
+
+This method installs a CPU-only version of sherpa-onnx
+
+###  step 1. Install the Python package sherpa-onnx - (From pre-compiled wheels, CPU only)
+
+
+
+
+detail:https://k2-fsa.github.io/sherpa/onnx/python/install.html#method-1-from-pre-compiled-wheels-cpu-only
 
 
 ### 测试安装
@@ -52,7 +61,13 @@ sherpa-onnx 支持多种编程语言，包括：C++  Python C#
 
 https://github.com/k2-fsa/sherpa-onnx/releases/tag/asr-models
 
-### 选择sherpa-onnx所使用的模型
+### 下载模型文件并放置在正确的目录中
+
+sherpa-onnx的预训练模型下载
+
+1. 在sherpa-onnx官方不同章节（如ASR/TTS/Keyword spotting的对应官方文档章节）里找对应的模型下载. https://k2-fsa.github.io/sherpa/onnx/index.html
+
+2. 本文选择sherpa-onnx所使用的stt模型 - funasr's SenseVoiceSmall
 
 对于 sherpa-onnx 官方仓库针对 SenseVoiceSmall 的导出版本，目前最完整、最新的资源主要集中在 k2-fsa/sherpa-onnx 的 Releases 页面以及其配套的文档中
 
@@ -68,4 +83,13 @@ https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-s
 sherpa-onnx
 
 https://k2-fsa.github.io/sherpa/onnx/index.html
+
+github repository:https://github.com/k2-fsa/sherpa-onnx
+
+how to export models to onnx format.
+
+https://k2-fsa.github.io/icefall/model-export/export-onnx.html
+
+
+
 
