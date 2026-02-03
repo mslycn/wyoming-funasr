@@ -19,7 +19,7 @@ WORKDIR /app
 RUN pip3 install --no-cache-dir --break-system-packages \
     torch 
 
-# orchaudio：音频读取、预处理、特征提取、音频增强
+# torchaudio：音频读取、预处理、特征提取、音频增强
 RUN pip3 install --no-cache-dir --break-system-packages \
     torchaudio
 
