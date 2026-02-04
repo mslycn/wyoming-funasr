@@ -28,6 +28,8 @@ funasr-onnx 不需要那么多环境变量设置（因为它不走 PyTorch 的�
 
 sherpa-onnx-asr和funasr的效果基本一样，但内存占用仅不到1g，而funasr占用3g起步。替换后可以大大降低配置需求.
 
+使用 sherpa-onnx 是在树莓派等嵌入式设备上运行 SenseVoice 的最优解。相比 funasr 库，sherpa-onnx 去掉了复杂的 PyTorch 依赖，直接调用 C++ 优化的 ONNX 运行时，推理速度提升非常明显，且内存占用极低。
+
 
 ## Install   sherpa-onnx CPU篇
 
