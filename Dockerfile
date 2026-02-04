@@ -15,25 +15,15 @@ RUN apt-get update \
 
 WORKDIR /app 
 
-# Torch深度学习 / 神经网络计算核心库
+# 
 RUN pip3 install --no-cache-dir --break-system-packages \
-    torch 
+    sherpa-onnx 
 
-# torchaudio：音频读取、预处理、特征提取、音频增强
+# Audio Processing
 RUN pip3 install --no-cache-dir --break-system-packages \
-    torchaudio
+    numpy
 
-# ffmpeg：音频解码
-#  Notice: ffmpeg is not installed. torchaudio is used to load audio
-#  FunASR 优先用 ffmpeg，检测到系统里没有 ffmpeg，会用 torchaudio
-RUN apt-get update \
- && apt-get install -y --no-install-recommends ffmpeg \
- && rm -rf /var/lib/apt/lists/*
-
-
-RUN pip3 install --no-cache-dir --break-system-packages \
-    funasr==1.3.0
-
+# Wyoming Protocol
 # Install the Wyoming library in your Python environment
 # Peer-to-peer protocol for home assistant voice assistants
 # wyoming 1.8.0: https://pypi.org/project/wyoming/1.8.0/
