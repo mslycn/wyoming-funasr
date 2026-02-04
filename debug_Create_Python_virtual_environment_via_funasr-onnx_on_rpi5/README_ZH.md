@@ -105,7 +105,6 @@ sherpa_onnx
 wyoming
 numpy
 
- 
 2. 使用代码前，确保你已经下载了 SenseVoice 的 ONNX 模型文件
 
 
