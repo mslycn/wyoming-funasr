@@ -532,6 +532,46 @@ AudioStop (soundfile）
         return True
 ~~~
 
+### AudioStop 15 秒
+
+AudioStop 是客户端ESP32 s3 box3B发出的.
+
+从日志来看，AudioStart 到 AudioStop 之间的时间间隔差异巨大（有的 3 秒，有的长达 15 秒），非常影响体验。
+
+原因：
+
+AudioStop 事件是由 发送方（ESP32 s3 box3B） 或 中间处理层（HA Assist） 决定的。导致 15 秒才停止的原因有：
+
+1.静音检测（VAD）未触发： ESP32 box3B 在等待你说话结束。它认为你“一直在说话”，直到触发 15秒强制超时。
+
+2.日志中 20:52:09 到 20:52:24 正好是 15秒，恰好是系统默认的“最长录音限制”。是一个典型的 硬超时（Hard Timeout）。说明在这 15 秒内，ESP32 认为环境一直不静默。
+
+3.Wi-Fi 信号不稳定
+
+优化：
+
+1.修改server.py 增加超时保护
+
+虽然 AudioStop 是客户端发的，在服务端增加一个逻辑：如果 audio_buffer 长度超过一定限度（比如对应 10 秒的采样），强制进行一次识别。 识别后，  客户端也会发AudioStop，
+
+2.当客户端随后发送迟到的 AudioStop 时，服务端应该直接忽略，而不是再次识别。需要回应客户端吗
+
+3.在 Wyoming 协议中，AudioStop 是一个单向终结信号。当客户端发送 AudioStop 时，它其实是在告诉你：“我传完了，我准备好听你的结果了（或者准备断开连接了）”。
+
+以下是处理迟到 AudioStop 的两个核心原则：
+
+ 协议层面：不需要新的 Response
+由于你在 10 秒超时处已经调用了 _process_audio 并通过 self.write_event(Transcript(...)) 把识别结果发给 Home Assistant 了，此时 HA 端的逻辑其实已经触发（比如灯已经开了）。
+
+当迟到的 AudioStop 到达时：
+
+不要再次发送 Transcript：如果你再发一次，HA 可能会尝试执行第二次指令。
+
+不要忽略这个事件：在代码逻辑中，你必须返回 False（在 AsyncEventHandler 的 handle_event 中），这会告诉服务端框架：“这个连接可以安全关闭了”。
+
+
+
+
 ## 优化点 Optimized
 - 不用 soundfile（快 2–3 倍），换NumPy -  AudioStop (Optimized with NumPy) 
 - audiochunk  实时解析
