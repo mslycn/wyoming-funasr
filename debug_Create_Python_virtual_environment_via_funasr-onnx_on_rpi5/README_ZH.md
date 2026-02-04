@@ -35,7 +35,7 @@ This method installs a CPU-only version of sherpa-onnx
 
 ###  step 1. Install the Python package sherpa-onnx - (From pre-compiled wheels, CPU only)
 
-
+sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2025-09-09 2025-09-09 的模型需要安装sherpa-onnx最新版
 
 
 detail:https://k2-fsa.github.io/sherpa/onnx/python/install.html#method-1-from-pre-compiled-wheels-cpu-only
@@ -93,6 +93,9 @@ rm sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2025-09-09.tar.bz2
 
 source: https://k2-fsa.github.io/sherpa/onnx/sense-voice/pretrained.html#sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17
    
+
+## server.py
+
 
 
 
