@@ -79,6 +79,7 @@ https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-s
 
 
 
+* useful links *
 
 sherpa-onnx
 
@@ -86,9 +87,16 @@ https://k2-fsa.github.io/sherpa/onnx/index.html
 
 github repository:https://github.com/k2-fsa/sherpa-onnx
 
-how to export models to onnx format.
+3. how to export models to onnx format.
 
-https://k2-fsa.github.io/icefall/model-export/export-onnx.html
+3.1 https://k2-fsa.github.io/icefall/model-export/export-onnx.html
+
+3.2 samples
+
+sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17-int8 
+
+This model is converted from https://www.modelscope.cn/models/iic/SenseVoiceSmall using the script export-onnx.py(https://github.com/k2-fsa/sherpa-onnx/blob/master/scripts/sense-voice/export-onnx.py)
+
 
 
 
