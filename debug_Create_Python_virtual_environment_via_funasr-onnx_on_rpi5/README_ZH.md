@@ -79,7 +79,7 @@ https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-s
 
 
 
-* useful links *
+useful links 
 
 sherpa-onnx
 
@@ -97,6 +97,7 @@ sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17-int8
 
 This model is converted from https://www.modelscope.cn/models/iic/SenseVoiceSmall using the script export-onnx.py(https://github.com/k2-fsa/sherpa-onnx/blob/master/scripts/sense-voice/export-onnx.py)
 
+source:https://k2-fsa.github.io/sherpa/onnx/sense-voice/pretrained.html#sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17
 
 
 
