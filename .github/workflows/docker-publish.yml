@@ -48,8 +48,8 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          ghcr.io/${{ github.repository_owner }}/funasr-wyoming:latest
-          ghcr.io/${{ github.repository_owner }}/funasr-wyoming:${{ github.ref_name }}
+          ghcr.io/${{ github.repository_owner }}/funasr-wyoming-sherpa-onnx:latest
+          ghcr.io/${{ github.repository_owner }}/funasr-wyoming-sherpa-onnx:${{ github.ref_name }}
 
     # GitHub Actions 里调试容器退出
     - name: Run container
