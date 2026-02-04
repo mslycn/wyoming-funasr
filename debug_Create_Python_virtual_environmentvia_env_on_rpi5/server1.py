@@ -5,6 +5,9 @@ Tests Wyoming service discovery and protocol compliance
 
 This tool validates that a Wyoming ASR server properly handles:
 - Wyoming Event Types
+
+result:wyoming protocol failed to connect
+
 """
 
 import asyncio
