@@ -24,6 +24,8 @@ sherpa-onnx 支持多种编程语言，包括：C++  Python C#
 
 项目使用的技术: onnxruntime: 用于神经网络计算的 ONNX 运行时，替代 PyTorch 进行模型推理。WebSocket: 用于实时通信。
 
+funasr-onnx 不需要那么多环境变量设置（因为它不走 PyTorch 的线程管理），它主要依赖 ONNX Runtime。
+
 sherpa-onnx-asr和funasr的效果基本一样，但内存占用仅不到1g，而funasr占用3g起步。替换后可以大大降低配置需求.
 
 
