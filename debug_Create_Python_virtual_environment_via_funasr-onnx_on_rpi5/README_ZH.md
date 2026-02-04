@@ -98,6 +98,15 @@ source: https://k2-fsa.github.io/sherpa/onnx/sense-voice/pretrained.html#sherpa-
 
 ## server.py
 
+### 准备工作
+
+1.安装server.py 运行时所用到的依赖包
+sherpa_onnx
+wyoming
+numpy
+
+ 
+2. 使用代码前，确保你已经下载了 SenseVoice 的 ONNX 模型文件
 
 
 
