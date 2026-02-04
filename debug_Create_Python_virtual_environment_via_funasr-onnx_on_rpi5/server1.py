@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Wyoming Protocol ServerTest
@@ -6,9 +5,17 @@ Wyoming Protocol ServerTest
 一个基于 Wyoming 协议 的语音转文字（STT）服务端脚本，使用阿里开源的 SenseVoiceSmall 模型。
 
 step 1. Install sherpa-onnx
-pip3 install sherpa-onnx
 
-step 2. server.py
+pip3 install sherpa-onnx==1.12.23
+
+pip3 install numpy==2.4.2
+
+pip3 install Wyoming==1.8.0
+
+step 2.download model
+
+
+step 3. server.py
 
 from funasr_onnx import SenseVoiceSmall
 
