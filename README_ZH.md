@@ -350,6 +350,7 @@ model = AutoModel(
         disable_update=True  # 禁用自动更新加速启动，启动更快
     )
 ~~~
+SenseVoiceSmall 默认是 FP32（32位浮点数）
 
 VAD 模型：fsmn-vad v2.0.4
 
