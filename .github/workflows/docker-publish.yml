@@ -47,7 +47,7 @@ jobs:
           ghcr.io/${{ github.repository_owner }}/funasr-wyoming:latest
           ghcr.io/${{ github.repository_owner }}/funasr-wyoming:${{ github.ref_name }}
 
-    # GitHub Actions 里调试容器退出
+    # 在GitHub Actions 里docker run 容器，调试容器为何退出
     - name: Run container
       run: |
         docker run --rm ghcr.io/mslycn/funasr-wyoming:main || true
