@@ -280,6 +280,8 @@ AsyncTcpServer(
 
 ## funasr model
 
+在 RPi5 上直接跑原生环境： 可以基于 python:3.10-slim 镜像，手动安装 modelscope 和 funasr。RPi5 的 CPU 性能其实可以直接运行 PyTorch（CPU版）。
+
 1. Paraformer-zh (v2.0.4)  - rpi5 killed 
 
 Paraformer-zh 模型：Paraformer-zh 是一个非流式（Non-streaming）模型，非常适合智能家居场景下的短指令识别，具有极高的准确率。
