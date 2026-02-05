@@ -278,6 +278,53 @@ AsyncTcpServer(
 
 ~~~
 
+## 用 FunASR 开发 ASR Server的两种路径
+
+要用FunASR搭建 Server，通常有两种路径：
+
+- way 1. 快速原型（Python + FastAPI/Flask）
+
+直接用 FunASR 的 Python API
+
+test - A. 使用原型（Python + FastAPI/Flask）直接用 FunASR 的 Python API
+~~~
+from funasr import AutoModel
+import torchaudio
+
+# 1. 加载模型 (Paraformer 是目前常用的高精度非流式模型)
+model = AutoModel(model="paraformer-zh", vad_model="fsmn-vad", punc_model="ct-punc")
+
+# 2. 预测
+res = model.generate(input="test.wav")
+print(res)
+~~~
+
+- way 2. 工业级部署（Runtime SDK）
+
+要开发支撑高并发的 Server，使用官方提供的 Runtime SDK。它集成了 C++ 推理引擎，支持 WebSocket 和 gRPC 协议。
+
+官方提供的 Runtime SDK（通常基于 Docker 部署）
+
+~~~
+# 示例命令，具体参数参考官方文档
+sudo docker run -p 10095:10095 -it registry.cn-hangzhou.aliyuncs.com/funasr_repo/funasr:runtime-sdk-cpu-0.4.5
+~~~
+
+客户端调用FunASR 提供了 Python/JS/C++ 的客户端 demo，直接发送音频流即可获取结果。
+
+典型案例：
+
+https://github.com/mslycn/FunAsr
+
+https://github.com/yaming116/FunAsr
+
+## 模型的流式 vs 非流式：
+
+Paraformer-large： 适合离线长语音转写（准确率最高）。
+
+Paraformer-online： 适合实时直播字幕或语音助手。
+
+
 ## funasr model
 
 在 RPi5 上直接跑原生环境： 可以基于 python:3.10-slim 镜像，手动安装 modelscope 和 funasr。RPi5 的 CPU 性能可以直接运行 PyTorch（CPU版）。
@@ -290,18 +337,7 @@ Paraformer-zh (v2.0.4)：这是 FunASR 1.3.0 推荐的 Paraformer 中文版本�
 
 内存建议：Paraformer-zh 在运行时约需 800MB - 1.2GB 内存，在树莓派上请注意监控资源。
 
-test - A. 快速原型（Python + FastAPI/Flask）直接用 FunASR 的 Python API
-~~~
-from funasr import AutoModel
-import torchaudio
 
-# 1. 加载模型 (Paraformer 是目前常用的高精度非流式模型)
-model = AutoModel(model="paraformer-zh", vad_model="fsmn-vad", punc_model="ct-punc")
-
-# 2. 预测
-res = model.generate(input="test.wav")
-print(res)
-~~~
 
 2. iic/SenseVoiceSmall
 
