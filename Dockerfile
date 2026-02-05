@@ -15,6 +15,10 @@ RUN apt-get update \
 
 WORKDIR /app 
 
+# PEP 668
+# Docker里绝对不要用 venv,因为Docker 本身就是“超级虚拟环境” ，但debain12 建议使用python venv，因为它引入了 externally-managed-environment 机制，Debian 官方不希望用 pip 直接修改系统自带的 Python 库，以免把系统搞崩
+# 使用 --break-system-packages 标志，强制安装到系统环境
+
 # Torch深度学习 / 神经网络计算核心库
 RUN pip3 install --no-cache-dir --break-system-packages \
     torch 
