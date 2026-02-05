@@ -24,11 +24,11 @@ Wyoming Whisper 也是用轻量 Debian/Ubuntu base 镜像
 
 pip3 install wyoming==1.8.0： wyoming协议
 
-pip3 install FunASR==1.3.0： ASR 引擎
+pip3 install FunASR==1.3.0： ASR 引擎。阿里达摩院开源的高性能语音识别工具包。
 
 FunASR 需要音频处理库：
 
-torchaudio：PyTorch / ffmpeg：音频转码
+torchaudio：PyTorch 官方推出的音频处理库。在 ASR 流程中，torchaudio 主要负责把原始音频文件变成模型能读懂的“特征图”。
 
 torch :ai神经网络
 
@@ -280,7 +280,7 @@ AsyncTcpServer(
 
 ## funasr model
 
-在 RPi5 上直接跑原生环境： 可以基于 python:3.10-slim 镜像，手动安装 modelscope 和 funasr。RPi5 的 CPU 性能其实可以直接运行 PyTorch（CPU版）。
+在 RPi5 上直接跑原生环境： 可以基于 python:3.10-slim 镜像，手动安装 modelscope 和 funasr。RPi5 的 CPU 性能可以直接运行 PyTorch（CPU版）。
 
 1. Paraformer-zh (v2.0.4)  - rpi5 killed 
 
@@ -289,6 +289,19 @@ Paraformer-zh 模型：Paraformer-zh 是一个非流式（Non-streaming）模型
 Paraformer-zh (v2.0.4)：这是 FunASR 1.3.0 推荐的 Paraformer 中文版本，识别率极高，且完全不需要联网（在镜像内已固化）。
 
 内存建议：Paraformer-zh 在运行时约需 800MB - 1.2GB 内存，在树莓派上请注意监控资源。
+
+test - A. 快速原型（Python + FastAPI/Flask）直接用 FunASR 的 Python API
+~~~
+from funasr import AutoModel
+import torchaudio
+
+# 1. 加载模型 (Paraformer 是目前常用的高精度非流式模型)
+model = AutoModel(model="paraformer-zh", vad_model="fsmn-vad", punc_model="ct-punc")
+
+# 2. 预测
+res = model.generate(input="test.wav")
+print(res)
+~~~
 
 2. iic/SenseVoiceSmall
 
