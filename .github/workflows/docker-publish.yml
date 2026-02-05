@@ -7,6 +7,7 @@ on:
       - "../Dockerfile"  
       - docker-publish.yml
       - server.py
+  workflow_dispatch: # 允许在 GitHub UI 手动点击运行
 
 jobs:
   build:
