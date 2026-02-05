@@ -299,6 +299,8 @@ res = model.generate(input="test.wav")
 print(res)
 ~~~
 
+客户端调用FunASR 提供的 Python API，输入音频流获取文本结果。
+
 - way 2. 工业级部署（Runtime SDK）
 
 要开发支撑高并发的 Server，使用官方提供的 Runtime SDK。它集成了 C++ 推理引擎，支持 WebSocket 和 gRPC 协议。
