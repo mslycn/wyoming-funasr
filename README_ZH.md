@@ -352,9 +352,9 @@ model = AutoModel(
 ~~~
 准确率：首先保证准确率，准确率与模型精度强关联 SenseVoiceSmall 默认是 FP32（32位浮点数）
 
-VAD 模型：fsmn-vad v2.0.4
+VAD 模型：fsmn-vad v2.0.4 ：VAD 会增加预处理延迟： 它需要先切分音频再喂给 ASR。关闭。优化点
 
-标点模型：ct-punc v2.0.4
+标点模型：ct-punc v2.0.4:推理完文字后还要跑一遍标点模型。 音频很短（<30秒），直接关掉，只跑单一推理模型。 优化点
 
 3. model  download
 
@@ -537,7 +537,15 @@ AudioStop (soundfile）
         return True
 ~~~
 
-### AudioStop (Optimized with NumPy
+### AudioStop (Optimized with NumPy)
+
+1. SenseVoiceSmall 接收 16000Hz 的音频
+在音频进入 model.generate 之前，确保它已经是 16k 的 numpy 数组。
+
+如果你的采集设备或前端传过来的是 44100Hz 或 48000Hz，则转换为16k 的 numpy 数组
+
+2.SenseVoiceSmall 默认是 FP32（32位浮点数）
+
 ~~~
 # ---------------- AudioStop (Optimized with NumPy) ----------------
         if AudioStop.is_type(event.type):
