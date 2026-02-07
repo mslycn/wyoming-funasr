@@ -50,7 +50,9 @@ Wyoming 1.8.0 事件
 
 Wyoming 1.8.0 -> Speech to Text
 
-### 代码严格实现 Wyoming 1.8.0 的握手与传输协议。
+### Execution Flow 
+
+代码严格实现 Wyoming 1.8.0 的握手与传输协议。
 
 ~~~
 Speech to Text
