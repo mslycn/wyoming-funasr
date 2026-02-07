@@ -642,7 +642,9 @@ AudioStop 事件是由 发送方（ESP32 s3 box3B） 或 中间处理层（HA As
 
 不要忽略这个事件：在代码逻辑中，你必须返回 False（在 AsyncEventHandler 的 handle_event 中），这会告诉服务端框架：“这个连接可以安全关闭了”。
 
+### AudioChunk 
 
+在 wyoming 协议中，AudioChunk 是一个高频触发的事件（通常每秒触发数十次）
 
 
 ## 优化点 Optimized
