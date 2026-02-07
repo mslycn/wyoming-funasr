@@ -122,8 +122,12 @@ Home Assistant's Wyoming integration is quite strict about the Describe/Info han
 
 ### 从 Wyoming 1.8.0 开始，Info 描述是强约束结构体.
 
+为了让 HA 识别出这是一个stt server，在连接初期HA 会主动发送一个 describe事件,你还需要回复一个Wyoming info。
+
 1. Wyoming info 分为 stt 和 tts等多种信息结构。
+
 2. 本文用到是stt Wyoming info
+
 3. 经测试，没有返回Wyoming info，或者返回的Wyoming info结构体字段不对，ha无法链接到  Wyoming stt server。
 
  Wyoming info 响应结构(1.8.0)
