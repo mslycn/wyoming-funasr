@@ -656,6 +656,22 @@ AudioStop 事件是由 发送方（ESP32 s3 box3B） 或 中间处理层（HA As
 - 
 - 模型换funasr-onnx （快 2–3 倍）- 用sherpa-onnx-asr替换funasr
 
+
+## ASR (语音识别) 流程的标准英文日志
+~~~
+调试步骤 (Step)	英文日志 (English Log)	中文说明
+Connection	New client connection established.	新客户端连接已建立。
+Stream Start	Audio stream initialized. Clearing buffer.	音频流初始化，正在清空缓冲区。
+Chunk Trace	Ingesting chunk: size={n}, dtype=float32	正在摄取音频片段：大小={n}。
+VAD/Silence	Low signal detected. Possible silence.	检测到微弱信号，可能是静默。
+End of Stream	AudioStop received. Total samples: {n}	收到停止事件。总采样数：{n}。
+Inference	Starting offline inference with Sherpa-ONNX.	开始使用 Sherpa-ONNX 进行离线推理。
+Final Result	Transcription success: "{text}" (Latency: {ms}ms)	识别成功：“{文本}”（延迟：{毫秒}）。
+Error	Inference failed: {error_msg}	推理失败：{错误信息}。
+
+~~~
+
+
 ## checklist
 
 ~~~
