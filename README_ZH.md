@@ -644,7 +644,11 @@ AudioStop 事件是由 发送方（ESP32 s3 box3B） 或 中间处理层（HA As
 
 ### AudioChunk 
 
-在 wyoming 协议中，AudioChunk 是一个高频触发的事件（通常每秒触发数十次）
+在 wyoming 协议中，AudioChunk 是一个高频触发的事件（通常每秒触发数十次）.
+
+Wyoming 通常每 20ms-50ms 发送一个 Chunk。音频会在缓冲区堆积
+
+
 
 
 ## 优化点 Optimized
