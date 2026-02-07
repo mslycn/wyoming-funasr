@@ -326,10 +326,15 @@ https://github.com/yaming116/FunAsr
 
 ## 模型的流式 vs 非流式：
 
+- 非流式
 Paraformer-large： 适合离线长语音转写（准确率最高）。
+SenseVoiceSmall:   是非流式模型（录完一段再处理）
+
+- 流式
 
 Paraformer-online： 适合实时直播字幕或语音助手。
 
+paraformer-zh-streaming:边说边出字
 
 ## funasr model
 
