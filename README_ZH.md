@@ -736,3 +736,7 @@ Wyoming info 1.8.0
 
 https://github.com/vrsttl/wyoming-parakeet-silero-wrapper/blob/ce1ac3116135a1d277ec60c59c71bc941c1f4f7d/wyoming_vad_asr_server.py
 
+SenseVoice多语言语音理解模型Small使用手册
+
+https://www.modelscope.cn/models/iic/SenseVoiceSmall
+
