@@ -50,7 +50,44 @@ Wyoming 1.8.0 事件
 
 Wyoming 1.8.0 -> Speech to Text
 
-### Execution Flow 
+
+### HA Wyoming ASR Client
+
+~~~
+import sounddevice as sd
+from wyoming.client import AsyncClient
+from wyoming.audio import AudioStart, AudioChunk, AudioStop
+from wyoming.event import Event
+import asyncio
+
+RATE = 16000
+CHANNELS = 1
+WIDTH = 2
+
+async def stream_mic():
+    async with AsyncClient.from_uri("tcp://localhost:10200") as client:
+        await client.write_event(AudioStart(rate=RATE, width=WIDTH, channels=CHANNELS).event())
+
+        def callback(indata, frames, time, status):
+            chunk = AudioChunk(audio=indata.tobytes(), rate=RATE, width=WIDTH, channels=CHANNELS)
+            asyncio.create_task(client.write_event(chunk.event()))
+
+        with sd.InputStream(callback=callback, channels=CHANNELS, samplerate=RATE):
+            await asyncio.sleep(5)  # Record for 5 seconds
+
+        await client.write_event(AudioStop().event())
+        response = await client.read_event()
+        print("Transcription:", response.data["text"])
+
+asyncio.run(stream_mic())
+
+~~~
+source：https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to-transcript
+
+
+###   Execution Flow 
+
+Wyoming ASR Client ← → Wyoming ASR Server
 
 代码严格实现 Wyoming 1.8.0 的握手与传输协议。
 
