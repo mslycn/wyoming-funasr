@@ -363,6 +363,12 @@ https://github.com/mslycn/FunAsr
 
 https://github.com/yaming116/FunAsr
 
+## 模型种类：
+
+- FunASR
+- Gummy
+- Paraformer
+
 ## 模型的流式 vs 非流式：
 
 - 非流式
@@ -739,4 +745,6 @@ https://github.com/vrsttl/wyoming-parakeet-silero-wrapper/blob/ce1ac3116135a1d27
 SenseVoice多语言语音理解模型Small使用手册
 
 https://www.modelscope.cn/models/iic/SenseVoiceSmall
+
+https://huggingface.co/FunAudioLLM/SenseVoiceSmall/blob/main/README_zh.md
 
