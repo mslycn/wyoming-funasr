@@ -382,6 +382,8 @@ FunAudioLLM 语音体系
   - Paraformer
   - ...
 
+- Gummy ：统一语音理解大模型。类似：GPT（文本）
+
 当前使用的是FunASR + SenseVoiceSmall模型
 
 ## 模型的流式 vs 非流式：
