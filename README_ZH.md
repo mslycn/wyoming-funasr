@@ -365,9 +365,24 @@ https://github.com/yaming116/FunAsr
 
 ## 模型种类：
 
-- FunASR
-- Gummy
-- Paraformer
+~~~
+
+FunAudioLLM 语音体系
+   ├── FunASR（语音识别框架 / 模型集合）
+   │       └── Paraformer（纯ASR模型）
+   │       └── SenseVoice（多任务音频模型）
+   │
+   └── Gummy（语音大模型 / 多模态方向）
+
+~~~
+
+- FunASR ：语音识别推理框架，训练框架，模型管理平台；
+- FunASR:  支持很多模型
+  - SenseVoice
+  - Paraformer
+  - ...
+
+当前使用的是FunASR + SenseVoiceSmall模型
 
 ## 模型的流式 vs 非流式：
 
