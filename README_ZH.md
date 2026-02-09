@@ -398,6 +398,9 @@ Paraformer-online： 适合实时直播字幕或语音助手。
 
 paraformer-zh-streaming:边说边出字
 
+Zipformer： 小米新一代 Kaldi 团队的 ASR 模型
+
+
 ## funasr model
 
 在 RPi5 上直接跑原生环境： 可以基于 python:3.10-slim 镜像，手动安装 modelscope 和 funasr。RPi5 的 CPU 性能可以直接运行 PyTorch（CPU版）。
