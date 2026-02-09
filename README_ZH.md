@@ -497,6 +497,18 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 3. Wyoming 送来的音频是： PCM 16kHz mono 如何读取效率最高
 
 ~~~
+{
+  "type": "audio.start",
+  "rate": 16000,
+  "width": 2,
+  "channels": 1
+}
+
+~~~
+
+server.py对应处理事件：if AudioStart.is_type(event.type):
+
+~~~
 DEBUG:sherpa_onnx_addon:Received event: Event(type='audio-chunk', data={'rate': 16000, 'width': 2, 'channels': 1, 'timestamp': None}, 
 ~~~
 
@@ -711,8 +723,15 @@ AudioStop 事件是由 发送方（ESP32 s3 box3B） 或 中间处理层（HA As
 
 Wyoming 通常每 20ms-50ms 发送一个 Chunk。音频会在缓冲区堆积
 
+ha client -> server.py
+~~~
+audio.chunk
+audio.chunk
+audio.chunk
 
+~~~
 
+server.py -> if AudioChunk.is_type(event.type):
 
 ## 优化点 Optimized
 - 不用 soundfile（快 2–3 倍），换NumPy -  AudioStop (Optimized with NumPy) 
