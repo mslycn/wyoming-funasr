@@ -111,7 +111,9 @@ Contains text transcription of spoken audio
 当对着 Home Assistant 说话时，看到的日志时间顺序是：
 
 ~~~
-Received event type: describe (必选)
+Received event type: describe (必选)  describe event仅在添加 Wyoming Protocol Integration时发生。
+
+Received event type: transcript
 
 Received event type: audio-start
 
