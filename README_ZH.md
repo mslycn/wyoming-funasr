@@ -108,10 +108,10 @@ Contains text transcription of spoken audio
 
 必须处理这些事件：
 ~~~
-AudioStart	开始一段音频
-AudioChunk	PCM16 音频流
+AudioStart	开始一段音频→ 声明音频格式
+AudioChunk	PCM16 音频流 → 持续发送音频
 AudioStop	音频结束
-Transcribe	Home Assistant 主动触发
+Transcribe	Home Assistant 主动触发→ 请求输出识别结果。Transcribe 事件本质：客户端请求执行语音转文字
 ~~~
 
 必须返回
