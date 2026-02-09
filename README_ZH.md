@@ -106,12 +106,19 @@ Send audio chunks until silence is detected
 Contains text transcription of spoken audio
 ~~~
 
+~~~
+事件类型    处理逻辑
+Describe,  返回 Info 事件（包含模型信息），客户端连接时通常会问一次。
+AudioStart 核心入口。在这里清理 audio_buffer，准备接收新一段音频。
+AudioChunk 持续将二进制音频数据塞进 self.audio_buffer。
+AudioStop  核心出口。停止录音，开始调用 FunASR 模型推理，并返回 Transcript。
+~~~
+
 必须处理这些事件：
 ~~~
 AudioStart	开始一段音频→ 声明音频格式
 AudioChunk	PCM16 音频流 → 持续发送音频
 AudioStop	音频结束
-Transcribe	Home Assistant 主动触发→ 请求输出识别结果。Transcribe 事件本质：客户端请求执行语音转文字
 ~~~
 
 必须返回
@@ -119,6 +126,17 @@ Transcribe	Home Assistant 主动触发→ 请求输出识别结果。Transcribe 
 Transcript(text="xxx")
 ~~~
 
+#### 关于Transcribe Event的处理
+
+Transcribe:非必须。	Home Assistant 主动触发→ 请求输出识别结果。Transcribe 事件本质：客户端请求执行语音转文字
+
+Wyoming 协议支持两种不同的 ASR 交互模式，客户端会根据需求二选一：
+
+- 模式 A（显式请求）：客户端先发一个 Transcribe 事件（告诉服务器：我要开始转录了，语言是 xx），然后再发音频数据。
+
+- 模式 B（直接发送 - 最常见）：客户端为了降低延迟，不发送 Transcribe，而是直接从 AudioStart 开始。
+
+结论： 绝大多数基于 Wyoming 的客户端（包括 Home Assistant 的 Assist 功能）在发起语音识别请求时，会直接跳过 Transcribe 步骤，直接发送 AudioStart
 
 
 
