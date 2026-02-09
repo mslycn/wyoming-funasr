@@ -106,6 +106,7 @@ Send audio chunks until silence is detected
 Contains text transcription of spoken audio
 ~~~
 
+### stt server 必须处理的事件类型
 ~~~
 事件类型    处理逻辑
 Describe,  返回 Info 事件（包含模型信息），客户端连接时通常会问一次。
