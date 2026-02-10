@@ -781,6 +781,20 @@ server.py -> if AudioChunk.is_type(event.type):
 - 
 - 模型换funasr-onnx （快 2–3 倍）- 用sherpa-onnx-asr替换funasr
 
+## 使用代码自动下载模型
+
+~~~
+#安装ModelScope
+pip install modelscope
+~~~
+
+~~~
+#SDK模型下载
+from modelscope import snapshot_download
+model_dir = snapshot_download('iic/SenseVoiceSmall')
+~~~
+
+source：https://www.modelscope.cn/models/iic/SenseVoiceSmall
 
 ## ASR (语音识别) 流程的标准英文日志
 ~~~
