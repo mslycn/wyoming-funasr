@@ -145,19 +145,6 @@ AudioStop	音频结束
 Transcript(text="xxx")
 ~~~
 
-#### 关于Transcribe Event的处理
-
-Transcribe:非必须。	Home Assistant 主动触发→ 请求输出识别结果。Transcribe 事件本质：客户端请求执行语音转文字
-
-Wyoming 协议支持两种不同的 ASR 交互模式，客户端会根据需求二选一：
-
-- 模式 A（显式请求）：客户端先发一个 Transcribe 事件（告诉服务器：我要开始转录了，语言是 xx），然后再发音频数据。
-
-- 模式 B（直接发送 - 最常见）：客户端为了降低延迟，不发送 Transcribe，而是直接从 AudioStart 开始。
-
-结论： 绝大多数基于 Wyoming 的客户端（包括 Home Assistant 的 Assist 功能）在发起语音识别请求时，会直接跳过 Transcribe 步骤，直接发送 AudioStart
-
-
 
 要让 HA 识别STT 服务，Wyoming 服务必须：
 
@@ -357,6 +344,21 @@ AsyncTcpServer(
 )
 
 ~~~
+
+#### 2. Transcribe Event
+
+关于Transcribe Event的处理
+
+Transcribe:非必须。	Home Assistant 主动触发→ 请求输出识别结果。Transcribe 事件本质：客户端请求执行语音转文字
+
+Wyoming 协议支持两种不同的 ASR 交互模式，客户端会根据需求二选一：
+
+- 模式 A（显式请求）：客户端先发一个 Transcribe 事件（告诉服务器：我要开始转录了，语言是 xx），然后再发音频数据。
+
+- 模式 B（直接发送 - 最常见）：客户端为了降低延迟，不发送 Transcribe，而是直接从 AudioStart 开始。
+
+结论： 绝大多数基于 Wyoming 的客户端（包括 Home Assistant 的 Assist 功能）在发起语音识别请求时，会直接跳过 Transcribe 步骤，直接发送 AudioStart
+
 
 ## 用 FunASR 开发 ASR Server的两种路径
 
