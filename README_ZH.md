@@ -506,6 +506,28 @@ model=model_dir: model_dir可以是字符串 ID，也可以是绝对/相对路�
 
 ~~~
 
+~~~
+            # Convert buffer to numpy array
+            audio_bytes = bytes(self.audio_buffer)
+            
+            # Convert based on sample width
+            if self.sample_width == 2:  # 16-bit
+                audio_data = np.frombuffer(audio_bytes, dtype=np.int16)
+            elif self.sample_width == 4:  # 32-bit
+                audio_data = np.frombuffer(audio_bytes, dtype=np.int32)
+            else:
+                raise ValueError(f"Unsupported sample width: {self.sample_width}")
+            
+            # Convert to float32 and normalize
+            audio_data = audio_data.astype(np.float32)
+            if self.sample_width == 2:
+                audio_data /= 32768.0
+            else:
+                audio_data /= 2147483648.0
+~~~
+
+source：https://github.com/vrsttl/wyoming-parakeet-silero-wrapper/blob/ce1ac3116135a1d277ec60c59c71bc941c1f4f7d/wyoming_vad_asr_server.py
+
 ### Audio Format(input) - Home Assistant sends audio as 16,000Hz, 16-bit, Mono PCM.
 
 1. ESP32-S3-Box 3
