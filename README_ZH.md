@@ -345,7 +345,7 @@ AsyncTcpServer(
 
 ~~~
 
-#### 2. Transcribe Event
+## step 2. Transcribe Event
 
 关于Transcribe Event的处理
 
@@ -358,6 +358,36 @@ Wyoming 协议支持两种不同的 ASR 交互模式，客户端会根据需求�
 - 模式 B（直接发送 - 最常见）：客户端为了降低延迟，不发送 Transcribe，而是直接从 AudioStart 开始。
 
 结论： 绝大多数基于 Wyoming 的客户端（包括 Home Assistant 的 Assist 功能）在发起语音识别请求时，会直接跳过 Transcribe 步骤，直接发送 AudioStart
+
+## step 3.1 AudioStart Event
+
+~~~
+{
+  "type": "audio.start",
+  "rate": 16000,
+  "width": 2,
+  "channels": 1
+}
+
+~~~
+
+server.py对应处理事件：if AudioStart.is_type(event.type):
+
+~~~
+DEBUG:sherpa_onnx_addon:Received event: Event(type='audio-chunk', data={'rate': 16000, 'width': 2, 'channels': 1, 'timestamp': None}, 
+~~~
+
+AudioChunk Event
+~~~
+AudioChunk(
+    audio=bytes,
+    rate=16000,
+    width=2,
+    channels=1
+)
+
+~~~
+width = 2 = 16-bit PCM（int16）,每个 sample = 2 字节.signed int16,不带 header，纯 PCM,是STT server（Vosk / FunASR / Whisper）默认且最稳的格式
 
 
 ## 用 FunASR 开发 ASR Server的两种路径
@@ -530,6 +560,26 @@ model=model_dir: model_dir可以是字符串 ID，也可以是绝对/相对路�
 
 source：https://github.com/vrsttl/wyoming-parakeet-silero-wrapper/blob/ce1ac3116135a1d277ec60c59c71bc941c1f4f7d/wyoming_vad_asr_server.py
 
+## step 3.3 AudioChunk Event
+
+### AudioChunk 
+
+在 wyoming 协议中，AudioChunk 是一个高频触发的事件（通常每秒触发数十次）.
+
+Wyoming 通常每 20ms-50ms 发送一个 Chunk。音频会在缓冲区堆积
+
+ha client -> server.py
+~~~
+audio.chunk
+audio.chunk
+audio.chunk
+
+~~~
+
+server.py -> if AudioChunk.is_type(event.type):
+
+
+
 ### Audio Format(input) - Home Assistant sends audio as 16,000Hz, 16-bit, Mono PCM.
 
 1. ESP32-S3-Box 3
@@ -557,35 +607,7 @@ Wyoming 协议封装：强制下采样并转换为 16kHz, 单声道, 16-bit PCM�
 
 3. Wyoming 送来的音频是： PCM 16kHz mono 如何读取效率最高
    
-AudioStart Event
 
-~~~
-{
-  "type": "audio.start",
-  "rate": 16000,
-  "width": 2,
-  "channels": 1
-}
-
-~~~
-
-server.py对应处理事件：if AudioStart.is_type(event.type):
-
-~~~
-DEBUG:sherpa_onnx_addon:Received event: Event(type='audio-chunk', data={'rate': 16000, 'width': 2, 'channels': 1, 'timestamp': None}, 
-~~~
-
-AudioChunk Event
-~~~
-AudioChunk(
-    audio=bytes,
-    rate=16000,
-    width=2,
-    channels=1
-)
-
-~~~
-width = 2 = 16-bit PCM（int16）,每个 sample = 2 字节.signed int16,不带 header，纯 PCM,是STT server（Vosk / FunASR / Whisper）默认且最稳的格式
 
 ### 音频的读取
 
@@ -638,7 +660,13 @@ source:https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to
 - AudioChunk
 - AudioStop
 
+## step 3.4 AudioStop Event
+
 AudioStop (soundfile）
+
+...
+
+AudioStop (NumPy）
 ~~~
 # ---------------- AudioStop (Optimized with NumPy) ----------------
         if AudioStop.is_type(event.type):
@@ -781,21 +809,6 @@ AudioStop 事件是由 发送方（ESP32 s3 box3B） 或 中间处理层（HA As
 
 不要忽略这个事件：在代码逻辑中，你必须返回 False（在 AsyncEventHandler 的 handle_event 中），这会告诉服务端框架：“这个连接可以安全关闭了”。
 
-### AudioChunk 
-
-在 wyoming 协议中，AudioChunk 是一个高频触发的事件（通常每秒触发数十次）.
-
-Wyoming 通常每 20ms-50ms 发送一个 Chunk。音频会在缓冲区堆积
-
-ha client -> server.py
-~~~
-audio.chunk
-audio.chunk
-audio.chunk
-
-~~~
-
-server.py -> if AudioChunk.is_type(event.type):
 
 ## 优化点 Optimized
 - 不用 soundfile（快 2–3 倍），换NumPy -  AudioStop (Optimized with NumPy) 
