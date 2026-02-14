@@ -53,6 +53,8 @@ Wyoming 1.8.0 -> Speech to Text
 
 ### HA Wyoming ASR Client
 
+Send  audio to a STT Wyoming server
+
 ~~~
 import sounddevice as sd
 from wyoming.client import AsyncClient
