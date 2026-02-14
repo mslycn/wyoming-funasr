@@ -345,7 +345,7 @@ AsyncTcpServer(
 
 ~~~
 
-## step 2. Transcribe Event
+## step 2.1 Transcribe Event
 
 关于Transcribe Event的处理
 
@@ -359,7 +359,7 @@ Wyoming 协议支持两种不同的 ASR 交互模式，客户端会根据需求�
 
 结论： 绝大多数基于 Wyoming 的客户端（包括 Home Assistant 的 Assist 功能）在发起语音识别请求时，会直接跳过 Transcribe 步骤，直接发送 AudioStart
 
-## step 3.1 AudioStart Event
+## step 2.2 AudioStart Event
 
 ~~~
 {
@@ -560,7 +560,7 @@ model=model_dir: model_dir可以是字符串 ID，也可以是绝对/相对路�
 
 source：https://github.com/vrsttl/wyoming-parakeet-silero-wrapper/blob/ce1ac3116135a1d277ec60c59c71bc941c1f4f7d/wyoming_vad_asr_server.py
 
-## step 3.3 AudioChunk Event
+## step 2.3 AudioChunk Event
 
 ### AudioChunk 
 
@@ -660,7 +660,7 @@ source:https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to
 - AudioChunk
 - AudioStop
 
-## step 3.4 AudioStop Event
+## step 2.4 AudioStop Event
 
 AudioStop (soundfile）
 
