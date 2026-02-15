@@ -448,9 +448,11 @@ FunAudioLLM 语音体系
 ~~~
 
 - FunASR ：语音识别推理框架，训练框架，模型管理平台；
-- FunASR:  支持很多模型
+- FunASR:  支持的模型
   - Paraformer    阿里较早一代ASR模型
-  - SenseVoice
+  - SenseVoice    阿里新一代多任务语音基础模型，类似语音领域的 LLM，。新的语音 AI 架构。包括：ASR（语音识别）SER（情感识别）LID（语言识别）音频事件识别。不像传统 ASR 只做“语音转文字”
+    - SenseVoice Large  精度更高,需要GPU,适合服务器
+    - SenseVoice Small  资源占用低,适合边缘设备,适合树莓派
   - ...
 
 - Gummy ：统一语音理解大模型。类似：GPT（文本）
