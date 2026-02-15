@@ -449,8 +449,8 @@ FunAudioLLM 语音体系
 
 - FunASR ：语音识别推理框架，训练框架，模型管理平台；
 - FunASR:  支持很多模型
+  - Paraformer    阿里较早一代ASR模型
   - SenseVoice
-  - Paraformer
   - ...
 
 - Gummy ：统一语音理解大模型。类似：GPT（文本）
