@@ -363,6 +363,7 @@ Wyoming 协议支持两种不同的 ASR 交互模式，客户端会根据需求�
 
 ## step 2.2 AudioStart Event
 
+input
 ~~~
 {
   "type": "audio.start",
@@ -768,13 +769,10 @@ AudioStop (NumPy）
             except Exception as e:
                 _LOGGER.error(f"Inference error: {e}", exc_info=True)
                 print(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]} - 识别过程出错")
-                await self.write_event(Transcript(text="").event())
-            
-            self.audio_buffer.clear()
-            return False # Close session after transcription
-
-        return True
-~~~
+ event = Event(
+            type="stt.text",
+            data={"text": text}
+        )
 
 ### AudioStop 15 秒
 
@@ -792,7 +790,7 @@ AudioStop 事件是由 发送方（ESP32 s3 box3B） 或 中间处理层（HA As
 
 3.Wi-Fi 信号不稳定
 
-优化：
+### 优化：
 
 1.修改server.py 增加超时保护
 
