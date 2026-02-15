@@ -773,6 +773,7 @@ AudioStop (NumPy）
             type="stt.text",
             data={"text": text}
         )
+~~~
 
 ### AudioStop 15 秒
 
