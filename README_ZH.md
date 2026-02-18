@@ -444,6 +444,13 @@ https://github.com/mslycn/FunAsr
 
 https://github.com/yaming116/FunAsr
 
+
+## Pipeline
+~~~
+Mode: offline
+VAD + ASR (+ punctuation)
+~~~
+
 ## 模型种类：
 
 ~~~
