@@ -460,13 +460,14 @@ FunAudioLLM 语音体系
 
 当前使用的是FunASR + SenseVoiceSmall模型
 
-## 模型的流式 vs 非流式：
+## 模型的流式Speech Recognition (Streaming) vs 非流式Speech Recognition (Non-streaming)：
 
-- 非流式
+- Speech Recognition (Non-streaming) - 非流式
+Fun-ASR-Nano
 Paraformer-large： 适合离线长语音转写（准确率最高）。
 SenseVoiceSmall:   是非流式模型（录完一段再处理）
 
-- 流式
+- Speech Recognition (Streaming) - 流式
 
 Paraformer-online： 适合实时直播字幕或语音助手。
 
