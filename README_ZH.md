@@ -14,6 +14,15 @@ funasr=1.3.0
 
     Paraformer-zh 模型
 
+## Environment
+~~~
+CPU: rpi5
+OS: [please fill]
+Python: [please fill]
+PyTorch: [please fill]
+FunASR versions: 1.3.0 
+~~~    
+
 ## Dockerfile
 
 1）FROM debian:bookworm-slim
