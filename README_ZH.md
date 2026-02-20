@@ -491,6 +491,9 @@ paraformer-zh-streaming:边说边出字
 
 Zipformer： 小米新一代 Kaldi 团队的 ASR 模型
 
+## offline mode vs online mode
+
+在 ASR 领域，通常把在线模式称为 Streaming ASR（流式识别），离线模式称为 Offline/Batch ASR（离线/批处理识别）。
 
 ## funasr model
 
