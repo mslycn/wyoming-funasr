@@ -451,16 +451,21 @@ Mode: offline
 VAD + ASR (+ punctuation)
 ~~~
 
-## 模型种类：
+## 阿里asr模型种类：
 
 ~~~
 
 FunAudioLLM 语音体系
    ├── FunASR（语音识别框架 / 模型集合）
-   │       └── Paraformer（纯ASR模型）
-   │       └── SenseVoice（多任务音频模型）
+   │       └── Paraformer（纯ASR模型）        :阿里最经典的非流式识别模型
+   │       └── SenseVoice（多任务音频模型）   : 主打情感和事件检测,需要听出音频里的背景音（如猫叫、敲门声）： 选 SenseVoice。它能过滤掉咳嗽、叹气等非语言杂音，不会把这些杂音强行转录成奇怪的字。
+   │       └── Gummy（语音大模型 / 多模态方向) :主打实时翻译
+   ├── Qwen3-ASR（2026年发布，Qwen 家族分支）
+   │       └── 
+   │       └── 
+   │       └── 
    │
-   └── Gummy（语音大模型 / 多模态方向）
+   └── 
 
 ~~~
 
