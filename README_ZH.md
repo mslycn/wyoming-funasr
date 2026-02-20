@@ -513,8 +513,14 @@ Paraformer-zh (v2.0.4)：这是 FunASR 1.3.0 推荐的 Paraformer 中文版本�
 内存建议：Paraformer-zh 在运行时约需 800MB - 1.2GB 内存，在树莓派上请注意监控资源。
 
 
+2. SenseVoice
 
-2. iic/SenseVoiceSmall
+2.1 SenseVoice-Large
+
+主要用于云端或高性能服务器，追求极高的语种覆盖和精度
+
+
+2.2 iic/SenseVoiceSmall
 
 ~~~
 model = AutoModel(
