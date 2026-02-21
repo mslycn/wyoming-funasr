@@ -444,6 +444,14 @@ https://github.com/mslycn/FunAsr
 
 https://github.com/yaming116/FunAsr
 
+## Inference  Framework
+
+~~~
+Inference  Framework
+   ├── FunASR (PyTorch)
+   ├── funasr-onnx
+   └── Sherpa-ONNX
+~~~
 
 ## Pipeline
 ~~~
