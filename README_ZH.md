@@ -168,7 +168,9 @@ Transcript(text="xxx")
 能返回 transcript
 
 
-## step 1. Home Assistant添加Wyoming integration
+## step 1. Wyoming Protocol Implementation
+
+Home Assistant添加Wyoming integration
 
 ### Home Assistant Wyoming integration 集成在启动时会：
 
