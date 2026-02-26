@@ -60,7 +60,7 @@ Wyoming 1.8.0 事件
 Wyoming 1.8.0 -> Speech to Text
 
 
-### HA Wyoming ASR Client
+## HA Wyoming ASR Client
 
 Send  audio to a STT Wyoming server
 
@@ -96,7 +96,7 @@ asyncio.run(stream_mic())
 source：https://julianbei.github.io/wyoming/07-examples/#asr-client-microphone-to-transcript
 
 
-###   Execution Flow 
+##   Execution Flow 
 
 Wyoming ASR Client ← → Wyoming ASR Server
 
@@ -117,12 +117,12 @@ Send audio chunks until silence is detected
 Contains text transcription of spoken audio
 ~~~
 
-## 交互流程日志示例（stt server side）
+### 交互流程日志示例（stt server side）
 
 当对着 Home Assistant 说话时，看到的日志时间顺序是：
 
 ~~~
-Received event type: describe (必选)  describe event仅在添加 Wyoming Protocol Integration时发生。
+Received event type: describe (必选)  返回Info。describe event仅在添加 Wyoming Protocol Integration时发生。
 
 Received event type: transcript
 
@@ -132,7 +132,7 @@ Received event type: audio-chunk (成百上千个)
 
 Received event type: audio-stop
 
-(最后代码要发送 transcript)
+(最后代码要返回transcrip，发送 transcript)
 ~~~
 
 ### stt server 必须处理的事件类型
@@ -510,7 +510,7 @@ Zipformer： 小米新一代 Kaldi 团队的 ASR 模型
 
 在 ASR 领域，通常把在线模式称为 Streaming ASR（流式识别），离线模式称为 Offline/Batch ASR（离线/批处理识别）。
 
-## funasr model
+## 下载 sherpa 模型（come from funasr model）
 
 在 RPi5 上直接跑原生环境： 可以基于 python:3.10-slim 镜像，手动安装 modelscope 和 funasr。RPi5 的 CPU 性能可以直接运行 PyTorch（CPU版）。
 
